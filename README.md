@@ -20,4 +20,4 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 . **title** (string): Travel plan title. <br/>
 . **startDate** (date): Trip start date. <br/>
 . **endDate** (date): Trip end date. <br/>
-. **status** (strings) :Planning status (e.g., "draft", "planned", "active") <br/>
+. **status** (string) :Planning status (e.g., "draft", "planned", "active") <br/>
