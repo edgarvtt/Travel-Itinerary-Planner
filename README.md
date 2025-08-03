@@ -2,7 +2,7 @@
 
 Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual classes of the project 👇🏽
 
-👤 User
+### 👤 User
 
 *Description*: Represents a user registered on the platform.
 
@@ -12,7 +12,7 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 . **password** (string): User password. <br/>
 . **preferences** (array de strings): Travel preferences (e.g.,"adventure," "relax," "historic"). <br/>
 
-🗺️ Itinerary
+### 🗺️ Itinerary
 
 *Description*: The central object, representing the complete travel plan.
 
@@ -22,7 +22,7 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 . **endDate** (date): Trip end date. <br/>
 . **status** (string) :Planning status (e.g., "draft", "planned", "active") <br/>
 
-🛧 Destination
+### 🛧 Destination
 
 *Description*: Represents a city, country or point of interest.
 
