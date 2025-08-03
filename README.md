@@ -6,7 +6,7 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 *Description*: Represents a user registered on the platform.
 
-. **id** (string): Unique user identifier.
+. **id** (string): Unique user identifier. /n
 . **name** (string): Username.
 . **email** (string): User's email address.
 . **password** (string): User password.
