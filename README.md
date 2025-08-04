@@ -54,6 +54,8 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 ### 🚕 Booking
 
+*Description:* Stores information about a reservation.
+
 . **id** (string) :Unique reservation identifier. <br/>
 . **bookingReference** (string):Reservation number <br/>
 . **provider** (string): Name of the booking provider (e.g. "Booking.com", "Decolar") without APIs only refereence <br/>
