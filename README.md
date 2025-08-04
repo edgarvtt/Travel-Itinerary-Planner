@@ -33,4 +33,29 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 . **reviews** (array Review): Collection of reviews(e.g., "draft", "planned", "active") <br/>
 . **guides** (array Resource): Collection of travel guides and resources <br/>
 
-. Resource ... 
+### 🚅 TripDay 
+
+*Description*: Represents a single day within the itinerary, organizing daily activities.
+
+. **date** (date): The specific date of the day. <br/>
+
+### 🏔️ Activity
+
+*Description*: Represents a specific event or action in the itinerary (flight, hotel, tour, meal).
+
+. **id** (string) :Unique activity identifier. <br/>
+. **name** (string): Name of the activity (e.g. "Hotel Check-in", "Museum Visit"). <br/>
+. **type** (string): Type of activity (e.g. "hotel", "flight", "tour", "meal") <br/>
+. **startDate** (date): Start date and time. <br/>
+. **endDate** (date): End date and time <br/>
+. **description** (string): Activity details. <br/>
+. **coast** (number): Estimated or actual cost. <br/>
+. **type** (string): Reservation status (e.g. "reserved", "pending"). <br/>
+
+### 🚕 Booking
+
+. **id** (string) :Unique reservation identifier. <br/>
+. **bookingReference** (string):Reservation number <br/>
+. **provider** (string): Name of the booking provider (e.g. "Booking.com", "Decolar") without APIs only refereence <br/>
+. **coast** (number): Final booking cost <br/>
+. **status**(string): Reservation status (e.g. "confirmed", "cancelled"). <br/>
