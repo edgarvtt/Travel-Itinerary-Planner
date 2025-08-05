@@ -84,7 +84,7 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 ### ⭐ Resource
 
-*Descrição:* Represents travel guides, articles, or other useful resources.
+*Description:* Represents travel guides, articles, or other useful resources.
 
 . id (string): Unique identifier. <br/>
 . title (string): Resource title. <br/>
