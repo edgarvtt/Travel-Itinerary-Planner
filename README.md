@@ -66,28 +66,28 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 *Description:* Tracks the costs of a trip.
 
-. **id** (string): Unique expense identifier.
-. **description** (string): Expense description (e.g., "lunch", "ticket").
-. **amount** (number): Expense amount.
-. **currency** (string): Currency used.
-. **date** (date): Expense date.
-. **category** (string): Expense category (e.g., "food", "transportation").
-
+. **id** (string): Unique expense identifier. <br/>
+. **description** (string): Expense description (e.g., "lunch", "ticket"). <br/>
+. **amount** (number): Expense amount. <br/>
+. **currency** (string): Currency used. <br/>
+. **date** (date): Expense date. <br/>
+. **category** (string): Expense category (e.g., "food", "transportation").<br/>
+ 
 ### ⭐ Review
 
 *Description:* Contains user reviews and comments about destinations or activities.
 
-. **id** (string): Unique review identifier.
-. **text** (string): Comment text.
-. **rating** (number): Score (e.g., 1 to 5 stars).
-. **date** (date): Publication date.
+. **id** (string): Unique review identifier. <br/>
+. **text** (string): Comment text. <br/>
+. **rating** (number): Score (e.g., 1 to 5 stars). <br/>
+. **date** (date): Publication date. <br/>
 
 ### ⭐ Resource
 
 *Descrição:* Represents travel guides, articles, or other useful resources.
 
-. id (string): Unique identifier.
-. title (string): Resource title.
-. type (string): Resource type (e.g., "article," "video," "guide").
-. url (string): Link to the resource.
+. id (string): Unique identifier. <br/>
+. title (string): Resource title. <br/>
+. type (string): Resource type (e.g., "article," "video," "guide").<br/>
+. url (string): Link to the resource. <br/>
 . content (string): Resource content.
