@@ -56,8 +56,38 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 *Description:* Stores information about a reservation.
 
-. **id** (string) :Unique reservation identifier. <br/>
-. **bookingReference** (string):Reservation number <br/>
-. **provider** (string): Name of the booking provider (e.g. "Booking.com", "Decolar") without APIs only refereence <br/>
-. **coast** (number): Final booking cost <br/>
-. **status**(string): Reservation status (e.g. "confirmed", "cancelled"). <br/>
+. **id** (string): Unique reservation identifier. <br/>
+. **bookingReference** (string): Reservation number. <br/>
+. **provider** (string): Name of the booking provider (e.g. "Booking.com", "Decolar") simulation without APIs. <br/>
+. **cost** (number): Final booking cost. <br/>
+. **status** (string): Reservation status (e.g. "confirmed", "cancelled"). <br/>
+
+### 💸 Expense
+
+*Description:* Tracks the costs of a trip.
+
+. **id** (string): Unique expense identifier.
+. **description** (string): Expense description (e.g., "lunch", "ticket").
+. **amount** (number): Expense amount.
+. **currency** (string): Currency used.
+. **date** (date): Expense date.
+. **category** (string): Expense category (e.g., "food", "transportation").
+
+### ⭐ Review
+
+*Description:* Contains user reviews and comments about destinations or activities.
+
+. **id** (string): Unique review identifier.
+. **text** (string): Comment text.
+. **rating** (number): Score (e.g., 1 to 5 stars).
+. **date** (date): Publication date.
+
+### ⭐ Resource
+
+*Descrição:* Represents travel guides, articles, or other useful resources.
+
+. id (string): Unique identifier.
+. title (string): Resource title.
+. type (string): Resource type (e.g., "article," "video," "guide").
+. url (string): Link to the resource.
+. content (string): Resource content.
