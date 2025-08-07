@@ -10,9 +10,9 @@ será executado <br/>
 
 ## notes:
 
-estou conhecendo bibliotecas melhores para o python, então a interface gráfica não foi das melhores e ando assistindo tutorial no youtube para melhorar isso. <br/>
-O código está sendo enviado de uma vez já que eu perdi algum trecho da aula que falava que era para entregar o programa estruturado até 06-08, mas a partir de agora <br/>
-vou realizando commit conforme for atualizando o projeto. <br/>
+estou conhecendo bibliotecas melhores para o python, então a interface gráfica não foi das melhores e ando assistindo tutorial no youtube para melhorar isso. 
+O código está sendo enviado de uma vez já que eu perdi algum trecho da aula que falava que era para entregar o programa estruturado até 06-08, mas a partir de agora 
+vou realizando commit conforme for atualizando o projeto. 
 
 ## Conceitual Class (what to expect conceptually from the program) 
 
