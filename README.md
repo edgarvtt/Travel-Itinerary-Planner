@@ -2,6 +2,20 @@
 
 Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual classes of the project 👇🏽
 
+## for use: 
+
+salve o programa em um diretório no seu computador
+execute ele através do terminal "python nome_do_arquivo.py" 
+será executado
+
+## notes:
+
+estou conhecendo bibliotecas melhores para o python, então a interface gráfica não foi das melhores e ando assistindo tutorial no youtube para melhorar isso
+o código está sendo enviado de uma vez já que eu perdi algum trecho da aula que falava que era para entrar o programa estruturado até 06-08, mas a partir de agora
+vou realizando commit conforme for atualizando o projeto
+
+## Conceitual Class (what to expect conceptually from the program) 
+
 ### 👤 User
 
 *Description*: Represents a user registered on the platform.
