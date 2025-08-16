@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Travel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .spinner {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <a href="index.html" class="text-3xl font-bold text-blue-600 mb-8">TravelPlanner</a>
+
+        <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-1">Bem-vindo de volta!</h2>
+            <p class="text-center text-gray-500 mb-6">Faça login para continuar.</p>
+
+            <form id="login-form" novalidate>
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" required>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" required>
+                </div>
+                
+                <!-- General Error Message -->
+                <div id="general-error" class="hidden mb-4 p-3 bg-red-100 text-red-800 border border-red-200 rounded-lg text-center text-sm"></div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" id="submit-button" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md flex items-center justify-center">
+                        <span id="button-text">Entrar</span>
+                        <div id="spinner" class="spinner hidden ml-2"></div>
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-6">
+                <p class="text-sm text-gray-600">
+                    Não tem uma conta? 
+                    <a href="signup.html" class="font-semibold text-blue-600 hover:underline">Cadastre-se</a>
+                </p>
+            </div>
+        </div>
+        <p class="text-center text-gray-500 text-xs mt-6">&copy; 2024 TravelPlanner. Todos os direitos reservados.</p>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const generalError = document.getElementById('general-error');
+        const submitButton = document.getElementById('submit-button');
+        const buttonText = document.getElementById('button-text');
+        const spinner = document.getElementById('spinner');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            generalError.classList.add('hidden');
+
+            // Basic validation
+            if (emailInput.value.trim() === '' || passwordInput.value.trim() === '') {
+                generalError.textContent = 'Por favor, preencha todos os campos.';
+                generalError.classList.remove('hidden');
+                return;
+            }
+
+            // Show loading state
+            buttonText.textContent = 'Entrando...';
+            spinner.classList.remove('hidden');
+            submitButton.disabled = true;
+
+            const loginData = {
+                email: emailInput.value,
+                password: passwordInput.value,
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData),
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Ocorreu um erro no servidor.');
+                }
+                
+                // Handle success
+                alert('Login bem-sucedido! Redirecionando...');
+                // In a real app, you would save a token and redirect
+                window.location.href = 'dashboard.html';
+
+            } catch (error) {
+                generalError.textContent = error.message;
+                generalError.classList.remove('hidden');
+            } finally {
+                // Restore button state
+                buttonText.textContent = 'Entrar';
+                spinner.classList.add('hidden');
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

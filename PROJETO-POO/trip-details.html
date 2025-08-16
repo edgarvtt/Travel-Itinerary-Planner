@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Viagem - Travel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .modal { display: none; }
+        .modal.is-open { display: flex; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="dashboard.html" class="text-gray-600 hover:text-blue-600 flex items-center"><i data-feather="arrow-left" class="w-5 h-5 mr-2"></i> Voltar</a>
+            <div class="text-2xl font-bold text-blue-600">TravelPlanner</div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        <div id="trip-header" class="mb-8 p-6 bg-white rounded-xl shadow-md"><div class="h-16 animate-pulse bg-gray-200 rounded-md"></div></div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Voos -->
+                <section id="flights-section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Voos</h2>
+                        <button onclick="openModal('flight-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button>
+                    </div>
+                    <div id="flights-list" class="space-y-4"><p class="text-gray-500">Nenhum voo adicionado.</p></div>
+                </section>
+                <!-- Hotéis -->
+                <section id="hotels-section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Hotéis</h2>
+                        <button onclick="openModal('hotel-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button>
+                    </div>
+                    <div id="hotels-list" class="space-y-4"><p class="text-gray-500">Nenhum hotel adicionado.</p></div>
+                </section>
+                <!-- Atividades -->
+                <section id="activities-section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-800">Passeios e Atividades</h2>
+                        <button onclick="openModal('activity-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button>
+                    </div>
+                    <div id="activities-list" class="space-y-4"><p class="text-gray-500">Nenhuma atividade adicionada.</p></div>
+                </section>
+            </div>
+            <aside class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Sugestões para você</h3>
+                    <div id="suggestions-list" class="space-y-4"><p class="text-gray-500">Carregando sugestões...</p></div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <!-- Modals -->
+    <div id="flight-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Voo</h3><form id="flight-form" class="space-y-4"><div><label class="block text-sm font-semibold">Companhia Aérea</label><input type="text" id="flight-company" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Código do Voo</label><input type="text" id="flight-code" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Partida</label><input type="datetime-local" id="flight-departure" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Chegada</label><input type="datetime-local" id="flight-arrival" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Voo</button><button type="button" onclick="closeModal('flight-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
+    </div>
+    <div id="hotel-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Hotel</h3><form id="hotel-form" class="space-y-4"><div><label class="block text-sm font-semibold">Nome do Hotel</label><input type="text" id="hotel-name" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-in</label><input type="date" id="hotel-checkin" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-out</label><input type="date" id="hotel-checkout" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Hotel</button><button type="button" onclick="closeModal('hotel-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
+    </div>
+    <div id="activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Atividade</h3><form id="activity-form" class="space-y-4"><div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="activity-description" placeholder="Ex: Visita ao Museu do Louvre" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Data</label><input type="date" id="activity-date" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Atividade</button><button type="button" onclick="closeModal('activity-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
+    </div>
+
+    <script>
+        function openModal(modalId) { document.getElementById(modalId).classList.add('is-open'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.remove('is-open'); }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            feather.replace();
+            const urlParams = new URLSearchParams(window.location.search);
+            const tripId = parseInt(urlParams.get('id'));
+
+            if (!tripId) { document.querySelector('main').innerHTML = '<p class="text-red-500 text-center">ID da viagem não encontrado.</p>'; return; }
+
+            // --- Funções de Renderização ---
+            const renderItem = (listId, items, renderFunc, emptyMsg) => {
+                const list = document.getElementById(listId);
+                list.innerHTML = items.length ? '' : `<p class="text-gray-500">${emptyMsg}</p>`;
+                items.forEach(item => list.innerHTML += renderFunc(item));
+            };
+            const flightHTML = f => `<div class="bg-white p-4 rounded-lg shadow-sm"><strong>${f.company} ${f.code}</strong><p class="text-sm text-gray-600">Partida: ${new Date(f.departure).toLocaleString()}</p></div>`;
+            const hotelHTML = h => `<div class="bg-white p-4 rounded-lg shadow-sm"><strong>${h.name}</strong><p class="text-sm text-gray-600">Check-in: ${new Date(h.checkin).toLocaleDateString()}</p></div>`;
+            const activityHTML = a => `<div class="bg-white p-4 rounded-lg shadow-sm"><strong>${a.description}</strong><p class="text-sm text-gray-600">Data: ${new Date(a.date).toLocaleDateString()}</p></div>`;
+            
+            const renderSuggestions = (suggestions) => {
+                const list = document.getElementById('suggestions-list');
+                list.innerHTML = '';
+                suggestions.forEach(s => { list.innerHTML += `<div class="bg-blue-50 p-3 rounded-lg"><p class="font-semibold">${s.name}</p><span class="text-xs text-blue-700">${s.type}</span></div>`; });
+            };
+
+            // --- Carregamento de Dados ---
+            async function loadTripData() {
+                try {
+                    const [tripRes, detailsRes] = await Promise.all([
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}`),
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}/details`)
+                    ]);
+                    if (!tripRes.ok || !detailsRes.ok) throw new Error('Não foi possível carregar os dados da viagem.');
+                    
+                    const { trip } = await tripRes.json();
+                    const details = await detailsRes.json();
+
+                    document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
+                    
+                    renderItem('flights-list', details.flights, flightHTML, 'Nenhum voo adicionado.');
+                    renderItem('hotels-list', details.hotels, hotelHTML, 'Nenhum hotel adicionado.');
+                    renderItem('activities-list', details.activities, activityHTML, 'Nenhuma atividade adicionada.');
+                    renderSuggestions(details.suggestions);
+                    feather.replace();
+                } catch (error) { document.getElementById('trip-header').innerHTML = `<p class="text-red-500">${error.message}</p>`; }
+            }
+            
+            // --- Submissão de Formulários ---
+            const handleFormSubmit = async (formId, url, getBody) => {
+                document.getElementById(formId).addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(getBody())
+                    });
+                    if (response.ok) { location.reload(); } 
+                    else { alert(`Falha ao adicionar item.`); }
+                });
+            };
+
+            handleFormSubmit('flight-form', `http://127.0.0.1:5000/api/trips/${tripId}/flights`, () => ({
+                company: document.getElementById('flight-company').value, code: document.getElementById('flight-code').value,
+                departure: document.getElementById('flight-departure').value, arrival: document.getElementById('flight-arrival').value,
+            }));
+            handleFormSubmit('hotel-form', `http://127.0.0.1:5000/api/trips/${tripId}/hotels`, () => ({
+                name: document.getElementById('hotel-name').value, checkin: document.getElementById('hotel-checkin').value,
+                checkout: document.getElementById('hotel-checkout').value,
+            }));
+            handleFormSubmit('activity-form', `http://127.0.0.1:5000/api/trips/${tripId}/activities`, () => ({
+                description: document.getElementById('activity-description').value, date: document.getElementById('activity-date').value,
+            }));
+
+            loadTripData();
+        });
+    </script>
+</body>
+</html>

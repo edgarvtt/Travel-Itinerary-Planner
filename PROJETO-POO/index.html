@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner - Planeje Sua Viagem dos Sonhos</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!--Fonts: Inter-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!--  Icons  -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        /* a little bit css */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Simple fade-in animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">TravelPlanner</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-300">Recursos</a>
+                <a href="#destinations" class="text-gray-600 hover:text-blue-600 transition duration-300">Destinos</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-600 transition duration-300">Sobre</a>
+            </nav>
+            <div>
+                <a href="login.html" class="hidden md:inline-block text-gray-600 hover:text-blue-600 mr-4">Login</a>
+                <a href="signup.html" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md">Comece Agora</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center text-white">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-black/50 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070" 
+                 alt="Paisagem de um lago nas montanhas" 
+                 class="absolute inset-0 w-full h-full object-cover">
+            
+            <!-- Content -->
+            <div class="relative z-20 text-center px-6">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Sua Jornada Perfeita Começa Aqui</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-gray-200">
+                    Crie, personalize e compartilhe roteiros de viagem com facilidade. Do planejamento à execução, nós cuidamos de tudo.
+                </p>
+                <a href="signup.html" class="bg-white text-blue-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-200 transition duration-300 shadow-xl">
+                    Planejar Minha Viagem
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-2">Tudo o que Você Precisa para Viajar</h2>
+                <p class="text-gray-600 mb-12 max-w-2xl mx-auto">De roteiros colaborativos a controle de despesas, nossa plataforma tem tudo integrado.</p>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1: Itinerary -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="map" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Roteiros Inteligentes</h3>
+                        <p class="text-gray-600">Crie e personalize itinerários dia a dia. Adicione voos, hotéis e atividades com apenas alguns cliques.</p>
+                    </div>
+                    <!-- Feature 2: Collaboration -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="users" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Planejamento Colaborativo</h3>
+                        <p class="text-gray-600">Convide amigos e familiares para planejar a viagem em conjunto, em tempo real.</p>
+                    </div>
+                    <!-- Feature 3: Bookings -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="briefcase" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Reservas Integradas</h3>
+                        <p class="text-gray-600">Encontre as melhores ofertas e reserve voos, hotéis e passeios diretamente na plataforma.</p>
+                    </div>
+                    <!-- Feature 4: Budget -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="dollar-sign" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Controle de Orçamento</h3>
+                        <p class="text-gray-600">Gerencie seus gastos de viagem e mantenha seu orçamento sob controle, sem surpresas.</p>
+                    </div>
+                    <!-- Feature 5: Guides -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="book-open" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Guias e Recomendações</h3>
+                        <p class="text-gray-600">Acesse guias de viagem completos e receba sugestões personalizadas com base em seus interesses.</p>
+                    </div>
+                    <!-- Feature 6: Offline Access -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                        <i data-feather="wifi-off" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Acesso Offline</h3>
+                        <p class="text-gray-600">Leve seu roteiro com você. Acesse mapas, reservas e informações importantes mesmo sem internet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Destinations Section -->
+        <section id="destinations" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-12">Explore Destinos Populares</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Destination Card 1 -->
+                    <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
+                        <img src="https://images.unsplash.com/photo-1522093007474-d86e9bf7ba6f?q=80&w=1974" alt="Roma, Itália" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 text-white">
+                            <h3 class="text-2xl font-bold">Roma</h3>
+                            <p class="text-gray-200">Itália</p>
+                        </div>
+                    </div>
+                    <!-- Destination Card 2 -->
+                    <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
+                        <img src="https://images.unsplash.com/photo-1540959733332-eab4de25247d?q=80&w=2070" alt="Tóquio, Japão" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 text-white">
+                            <h3 class="text-2xl font-bold">Tóquio</h3>
+                            <p class="text-gray-200">Japão</p>
+                        </div>
+                    </div>
+                    <!-- Destination Card 3 -->
+                    <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
+                        <img src="https://images.unsplash.com/photo-1505832018823-50331d703235?q=80&w=2070" alt="Bali, Indonésia" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 text-white">
+                            <h3 class="text-2xl font-bold">Bali</h3>
+                            <p class="text-gray-200">Indonésia</p>
+                        </div>
+                    </div>
+                    <!-- Destination Card 4 -->
+                    <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
+                        <img src="https://images.unsplash.com/photo-1519677100203-a0e668c97d45?q=80&w=2071" alt="Paris, França" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-6 text-white">
+                            <h3 class="text-2xl font-bold">Paris</h3>
+                            <p class="text-gray-200">França</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About/CTA Section -->
+        <section id="about" class="py-20 bg-blue-600 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Pronto para a Aventura da Sua Vida?</h2>
+                <p class="max-w-2xl mx-auto mb-8">
+                    Junte-se a milhares de viajantes que usam o TravelPlanner para organizar viagens inesquecíveis.
+                    É grátis para começar.
+                </p>
+                <a href="signup.html" class="bg-white text-blue-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-200 transition duration-300 shadow-xl">
+                    Criar Meu Roteiro Grátis
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 TravelPlanner. Todos os direitos reservados.</p>
+            <p class="text-sm text-gray-500 mt-2">Um projeto de software - 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Simple Intersection Observer for fade-in animations
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
+
