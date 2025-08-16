@@ -6,13 +6,19 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 
 salve o programa em um diretório no seu computador <br/>
 execute ele através do terminal "python nome_do_arquivo.py" <br/>
-será executado <br/>
+após isso, abra index.html para começar <br/>
+
 
 ## notes:
 
-estou conhecendo bibliotecas melhores para o python, então a interface gráfica não foi das melhores e ando assistindo tutorial no youtube para melhorar isso. 
-O código está sendo enviado de uma vez já que eu perdi algum trecho da aula que falava que era para entregar o programa estruturado até 06-08, mas a partir de agora 
-vou realizando commit conforme for atualizando o projeto. 
+o programa é essencialmente python, mas outras tecnologias foram usadas para compor a parte visual
+a questão de simular um servidor,banco de dados e a parte lógica do back-end está em python, porém visualmente foram usados frameworks CSS Tailwand , HTML e JS, além do JSON para integrar algumas partes python na web, mas também foi usado o FLASK que é um framework web para python.
+
+<br/>
+
+decidi fazer com tecnologias web por ter uma maior familiriade e por ter a certeza que ficaria algo mais bonito,
+a curva de aprendizado para aprender uma biblioteca python que entregasse a parte da interface gráfica de maneira 'bonita visualmente' seria bastante alta
+então estou usando habilidades que adqueri anteriormente, como pode ser visto em outros projetos meus neste github.
 
 ## Conceitual Class (what to expect conceptually from the program) 
 
