@@ -35,6 +35,18 @@
             "name": "vitor",
             "email": "vitor123@gmail.com",
             "password": "123456"
+        },
+        {
+            "id": 7,
+            "name": "Edgar",
+            "email": "kik189@gmail.com",
+            "password": "123456"
+        },
+        {
+            "id": 8,
+            "name": "Edgar",
+            "email": "teste2@gmail.com",
+            "password": "123456"
         }
     ],
     "trips": [
