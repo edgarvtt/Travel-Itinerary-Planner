@@ -13,56 +13,45 @@
 </head>
 <body class="bg-gray-100">
 
-    <!-- Header -->
     <header class="bg-white shadow-sm">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-blue-600">TravelPlanner</a>
             <div>
-                <span class="text-gray-700 mr-4">Bem-vindo!</span>
-                <a href="index.html" class="text-sm text-gray-600 hover:text-blue-600">Sair</a>
+                <span id="user-welcome" class="text-gray-700 mr-4"></span>
+                <a id="logout-link" href="#" class="text-sm text-gray-600 hover:text-blue-600">Sair</a>
             </div>
         </div>
     </header>
 
     <main class="container mx-auto p-6">
-        <!-- Seção de Criar Nova Viagem -->
         <section id="create-trip-section" class="mb-12">
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Planeje sua Próxima Aventura</h1>
             <div class="bg-white p-8 rounded-xl shadow-md">
                 <form id="create-trip-form">
                     <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Campos do formulário -->
-                        <div>
-                            <label for="destination" class="block text-sm font-semibold text-gray-700 mb-2">Destino</label>
-                            <input type="text" id="destination" placeholder="Ex: Paris, França" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label for="trip-name" class="block text-sm font-semibold text-gray-700 mb-2">Nome da Viagem</label>
-                            <input type="text" id="trip-name" placeholder="Ex: Férias na Europa" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label for="start-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Início</p>
-                            <input type="date" id="start-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
-                        <div>
-                            <label for="end-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Fim</p>
-                            <input type="date" id="end-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        </div>
+                        <div><label for="destination" class="block text-sm font-semibold text-gray-700 mb-2">Destino</label><input type="text" id="destination" placeholder="Ex: Paris, França" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
+                        <div><label for="trip-name" class="block text-sm font-semibold text-gray-700 mb-2">Nome da Viagem</label><input type="text" id="trip-name" placeholder="Ex: Férias na Europa" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
+                        <div><label for="start-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Início</p><input type="date" id="start-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
+                        <div><label for="end-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Fim</p><input type="date" id="end-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
                     </div>
-                    <div class="mt-6 text-right">
-                        <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
-                            Criar Roteiro
-                        </button>
-                    </div>
+                    <div class="mt-6 text-right"><button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Criar Roteiro</button></div>
                 </form>
             </div>
         </section>
 
-        <!-- Seção Minhas Viagens -->
-        <section id="my-trips-section">
+        <!-- Seção PRIVADA do Usuário -->
+        <section id="my-trips-section" class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Roteiros</h2>
+            <div id="my-trips-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <p class="text-gray-500 col-span-full">Carregando seus roteiros...</p>
+            </div>
+        </section>
+
+        <!-- Seção PÚBLICA de Sugestões -->
+        <section id="suggestions-section">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Sugestões de Roteiros</h2>
-            <div id="trips-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p id="no-trips-message" class="text-gray-500 col-span-full">Carregando roteiros...</p>
+            <div id="suggestions-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <p class="text-gray-500 col-span-full">Carregando sugestões...</p>
             </div>
         </section>
     </main>
@@ -71,18 +60,28 @@
         document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
 
-            const tripForm = document.getElementById('create-trip-form');
-            const tripsList = document.getElementById('trips-list');
-            const noTripsMessage = document.getElementById('no-trips-message');
+            const createTripForm = document.getElementById('create-trip-form');
+            const myTripsList = document.getElementById('my-trips-list');
+            const suggestionsList = document.getElementById('suggestions-list');
+            const userWelcome = document.getElementById('user-welcome');
+            const logoutLink = document.getElementById('logout-link');
+            
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-            function renderTrip(trip) {
-                const tripCardLink = document.createElement('a');
-                tripCardLink.href = `trip-details.html?id=${trip.id}`;
-                tripCardLink.className = 'block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300';
-                
+            if (!loggedInUser) {
+                alert('Você precisa fazer login para acessar esta página.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            userWelcome.textContent = `Bem-vindo, ${loggedInUser.name}!`;
+
+            function createTripCard(trip) {
+                const card = document.createElement('a');
+                card.href = `trip-details.html?id=${trip.id}`;
+                card.className = 'block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300';
                 const imageUrl = `https://placehold.co/600x400/a0c4ff/333333?text=${encodeURIComponent(trip.destination)}`;
-
-                tripCardLink.innerHTML = `
+                card.innerHTML = `
                     <img class="w-full h-40 object-cover" src="${imageUrl}" alt="Imagem de ${trip.destination}">
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-1">${trip.name}</h3>
@@ -91,43 +90,39 @@
                             <i data-feather="calendar" class="w-4 h-4 mr-2"></i>
                             <span>${new Date(trip.start_date).toLocaleDateString()} - ${new Date(trip.end_date).toLocaleDateString()}</span>
                         </div>
-                    </div>
-                `;
-                tripsList.appendChild(tripCardLink);
-                feather.replace();
+                    </div>`;
+                return card;
             }
             
-            async function loadInitialTrips() {
+            async function loadTrips(url, listElement, emptyMessage) {
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/api/trips');
-                    if (!response.ok) throw new Error('Falha ao buscar roteiros.');
-                    
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Falha ao buscar dados.');
                     const data = await response.json();
                     
-                    noTripsMessage.classList.add('hidden');
-                    tripsList.innerHTML = ''; // Limpa a mensagem de "carregando"
-
+                    listElement.innerHTML = '';
                     if (data.trips && data.trips.length > 0) {
-                        data.trips.forEach(renderTrip);
+                        data.trips.forEach(trip => {
+                            listElement.appendChild(createTripCard(trip));
+                        });
                     } else {
-                        noTripsMessage.textContent = 'Você ainda não tem nenhum roteiro. Crie um acima!';
-                        noTripsMessage.classList.remove('hidden');
+                        listElement.innerHTML = `<p class="text-gray-500 col-span-full">${emptyMessage}</p>`;
                     }
+                    feather.replace();
                 } catch (error) {
                     console.error("Erro ao carregar roteiros:", error);
-                    noTripsMessage.textContent = 'Não foi possível carregar seus roteiros.';
-                    noTripsMessage.classList.remove('hidden');
+                    listElement.innerHTML = `<p class="text-red-500 col-span-full">Não foi possível carregar os roteiros.</p>`;
                 }
             }
 
-            tripForm.addEventListener('submit', async (event) => {
+            createTripForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 const tripData = {
                     destination: document.getElementById('destination').value,
                     name: document.getElementById('trip-name').value,
                     start_date: document.getElementById('start-date').value,
                     end_date: document.getElementById('end-date').value,
-                    user_id: 1 // Simulado
+                    user_id: loggedInUser.id
                 };
                 try {
                     const response = await fetch('http://127.0.0.1:5000/api/trips', {
@@ -137,15 +132,26 @@
                     });
                     if (!response.ok) throw new Error('Falha ao criar viagem.');
                     const newTrip = await response.json();
-                    renderTrip(newTrip.trip);
-                    tripForm.reset();
+                    
+                    const noTripsMsg = document.querySelector('#my-trips-list > p');
+                    if(noTripsMsg) noTripsMsg.remove();
+                    
+                    myTripsList.appendChild(createTripCard(newTrip.trip));
+                    feather.replace();
+                    createTripForm.reset();
                 } catch (error) {
                     alert(`Erro: ${error.message}`);
                 }
             });
             
-            // Carrega os roteiros existentes ao iniciar a página
-            loadInitialTrips();
+            logoutLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                localStorage.removeItem('loggedInUser');
+                window.location.href = 'login.html';
+            });
+            
+            loadTrips(`http://127.0.0.1:5000/api/my-trips?user_id=${loggedInUser.id}`, myTripsList, 'Você ainda não tem nenhum roteiro. Crie um acima!');
+            loadTrips('http://127.0.0.1:5000/api/suggestions', suggestionsList, 'Nenhuma sugestão disponível no momento.');
         });
     </script>
 </body>

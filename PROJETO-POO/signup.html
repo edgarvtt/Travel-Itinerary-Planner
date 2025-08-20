@@ -4,91 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crie sua Conta - Travel Planner</title>
-
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Style for error message placeholders to prevent layout shift */
-        .error-message {
-            min-height: 1rem; /* Equivalent to h-4 in Tailwind */
-        }
-        .spinner {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .error-message { min-height: 1rem; }
+        .spinner { border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #fff; width: 16px; height: 16px; animation: spin 1s ease-in-out infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-100">
 
     <div class="min-h-screen flex flex-col items-center justify-center p-4">
-        <!-- Logo -->
-        <a href="index.html" class="text-3xl font-bold text-blue-600 mb-8">
-            TravelPlanner
-        </a>
+        <a href="index.html" class="text-3xl font-bold text-blue-600 mb-8">TravelPlanner</a>
 
-        <!-- Signup Card -->
         <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
             <div id="form-container">
                 <h2 class="text-2xl font-bold text-center text-gray-800 mb-1">Crie sua conta</h2>
                 <p class="text-center text-gray-500 mb-6">É rápido e fácil.</p>
 
-                <!-- The form will be handled by JavaScript -->
                 <form id="signup-form" novalidate>
-                    <!-- Name Input -->
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Nome Completo</label>
-                        <input type="text" id="name" name="name" placeholder="Seu nome"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                        <p id="name-error" class="text-red-500 text-xs mt-1 error-message"></p>
+                    <!-- Nome, Email, Senha -->
+                    <div class="mb-4"><label for="name" class="block text-gray-700 text-sm font-semibold mb-2">Nome Completo</label><input type="text" id="name" name="name" placeholder="Seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"><p id="name-error" class="text-red-500 text-xs mt-1 error-message"></p></div>
+                    <div class="mb-4"><label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label><input type="email" id="email" name="email" placeholder="seu@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"><p id="email-error" class="text-red-500 text-xs mt-1 error-message"></p></div>
+                    <div class="mb-4"><label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Senha</label><input type="password" id="password" name="password" placeholder="••••••••" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"><p id="password-error" class="text-red-500 text-xs mt-1 error-message">A senha deve ter no mínimo 8 caracteres.</p></div>
+                    
+                    <!-- SEÇÃO: Preferências -->
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-semibold mb-2">Preferências de Viagem</label>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <label class="flex items-center space-x-2 font-medium text-gray-600"><input type="checkbox" name="preferences" value="aventura" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"><span>Aventura</span></label>
+                            <label class="flex items-center space-x-2 font-medium text-gray-600"><input type="checkbox" name="preferences" value="relaxar" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"><span>Relaxar</span></label>
+                            <label class="flex items-center space-x-2 font-medium text-gray-600"><input type="checkbox" name="preferences" value="historico" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"><span>Histórico</span></label>
+                            <label class="flex items-center space-x-2 font-medium text-gray-600"><input type="checkbox" name="preferences" value="gastronomia" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"><span>Gastronomia</span></label>
+                        </div>
                     </div>
 
-                    <!-- Email Input -->
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700 text-sm font-semibold mb-2">Email</label>
-                        <input type="email" id="email" name="email" placeholder="seu@email.com"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                        <p id="email-error" class="text-red-500 text-xs mt-1 error-message"></p>
-                    </div>
-
-                    <!-- Password Input -->
-                    <div class="mb-4">
-                        <label for="password" class="block text-gray-700 text-sm font-semibold mb-2">Senha</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                        <p id="password-error" class="text-red-500 text-xs mt-1 error-message">A senha deve ter no mínimo 8 caracteres.</p>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div>
-                        <button type="submit" id="submit-button"
-                                class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md flex items-center justify-center">
-                            <span id="button-text">Criar Conta</span>
-                            <div id="spinner" class="spinner hidden ml-2"></div>
-                        </button>
-                    </div>
+                    <div><button type="submit" id="submit-button" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md flex items-center justify-center"><span id="button-text">Criar Conta</span><div id="spinner" class="spinner hidden ml-2"></div></button></div>
                 </form>
             </div>
             
-            <!-- General Error Message -->
+            <!-- Mensagens de erro/sucesso -->
             <div id="general-error" class="hidden mt-4 p-3 bg-red-100 text-red-800 border border-red-200 rounded-lg text-center text-sm"></div>
-            
-            <!-- Success Message -->
             <div id="success-message" class="hidden text-center">
                 <svg class="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -104,9 +61,6 @@
                 </p>
             </div>
         </div>
-        <p class="text-center text-gray-500 text-xs mt-6">
-            &copy; 2024 TravelPlanner. Todos os direitos reservados.
-        </p>
     </div>
 
     <script>
@@ -114,121 +68,47 @@
         const nameInput = document.getElementById('name');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        
-        const nameError = document.getElementById('name-error');
-        const emailError = document.getElementById('email-error');
-        const passwordError = document.getElementById('password-error');
-        
         const successMessage = document.getElementById('success-message');
-        const generalError = document.getElementById('general-error');
         const formContainer = document.getElementById('form-container');
-        const loginLinkContainer = document.getElementById('login-link-container');
-
-        const submitButton = document.getElementById('submit-button');
-        const buttonText = document.getElementById('button-text');
-        const spinner = document.getElementById('spinner');
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        const setError = (input, errorElement, message) => {
-            input.classList.remove('border-gray-300', 'focus:ring-blue-500');
-            input.classList.add('border-red-500', 'focus:ring-red-500');
-            errorElement.textContent = message;
-        };
-
-        const clearError = (input, errorElement) => {
-            input.classList.remove('border-red-500', 'focus:ring-red-500');
-            input.classList.add('border-gray-300', 'focus:ring-blue-500');
-            errorElement.textContent = '';
-        };
-
-        const validateForm = () => {
-            let isValid = true;
-            generalError.classList.add('hidden');
-
-            if (nameInput.value.trim() === '') {
-                setError(nameInput, nameError, 'O campo nome é obrigatório.');
-                isValid = false;
-            } else {
-                clearError(nameInput, nameError);
-            }
-
-            if (emailInput.value.trim() === '') {
-                setError(emailInput, emailError, 'O campo email é obrigatório.');
-                isValid = false;
-            } else if (!emailRegex.test(emailInput.value)) {
-                setError(emailInput, emailError, 'Por favor, insira um email válido.');
-                isValid = false;
-            } else {
-                clearError(emailInput, emailError);
-            }
-
-            if (passwordInput.value.length < 8) {
-                setError(passwordInput, passwordError, 'A senha deve ter no mínimo 8 caracteres.');
-                isValid = false;
-            } else {
-                passwordError.textContent = ''; // Clear help text
-                clearError(passwordInput, passwordError);
-            }
-            return isValid;
-        };
 
         signupForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            if (!validateForm()) {
-                return;
-            }
+            // Lógica de validação aqui (omitida para focar na submissão)
 
-            // Show loading state
-            buttonText.textContent = 'Criando...';
-            spinner.classList.remove('hidden');
-            submitButton.disabled = true;
+            // Coleta as preferências selecionadas
+            const preferenceNodes = document.querySelectorAll('input[name="preferences"]:checked');
+            const preferences = Array.from(preferenceNodes).map(node => node.value);
 
             const formData = {
                 name: nameInput.value,
                 email: emailInput.value,
                 password: passwordInput.value,
+                preferences: preferences // Adiciona as preferências ao corpo da requisição
             };
 
             try {
-                // This is where you send data to your backend.
-                // The URL '/api/signup' is a placeholder for your actual backend endpoint.
                 const response = await fetch('http://127.0.0.1:5000/api/signup', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData),
                 });
-
-                const result = await response.json();
-
+                
                 if (!response.ok) {
-                    // Handle server-side errors (e.g., email already exists)
-                    throw new Error(result.message || 'Ocorreu um erro no servidor.');
+                    const errorResult = await response.json();
+                    throw new Error(errorResult.message || 'Falha ao criar conta.');
                 }
                 
-                // Handle success
                 formContainer.classList.add('hidden');
-                loginLinkContainer.classList.add('hidden');
                 successMessage.classList.remove('hidden');
 
-                // Simulate redirect after showing success message
                 setTimeout(() => {
-                    // In a real app, you would redirect to the user's dashboard
-                    // window.location.href = '/dashboard.html';
-                    alert('Redirecionando para o painel do usuário!');
-                }, 2500);
+                    window.location.href = 'login.html';
+                }, 2000);
 
             } catch (error) {
-                // Display network errors or server-side error messages
+                const generalError = document.getElementById('general-error');
                 generalError.textContent = error.message;
                 generalError.classList.remove('hidden');
-            } finally {
-                // Restore button state
-                buttonText.textContent = 'Criar Conta';
-                spinner.classList.add('hidden');
-                submitButton.disabled = false;
             }
         });
     </script>

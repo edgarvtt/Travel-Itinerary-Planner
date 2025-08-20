@@ -11,6 +11,30 @@
             "name": "edgar",
             "email": "vitoredgar888@gmail.com",
             "password": "12345678"
+        },
+        {
+            "id": 3,
+            "name": "Edgar",
+            "email": "letsgo@gmail.com",
+            "password": "12345678"
+        },
+        {
+            "id": 4,
+            "name": "Edgar",
+            "email": "vitoredgar889@gmail.com",
+            "password": "12345678"
+        },
+        {
+            "id": 5,
+            "name": "Edgar",
+            "email": "teste123@gmail.com",
+            "password": "123456"
+        },
+        {
+            "id": 6,
+            "name": "vitor",
+            "email": "vitor123@gmail.com",
+            "password": "123456"
         }
     ],
     "trips": [
@@ -37,6 +61,56 @@
             "name": "Recife , BRAZIL",
             "start_date": "2025-09-25",
             "end_date": "2025-08-19"
+        },
+        {
+            "id": 4,
+            "user_id": 1,
+            "destination": "Madrid, SPAIN ",
+            "name": "Recife , BRAZIL",
+            "start_date": "2025-08-28",
+            "end_date": "2025-09-06"
+        },
+        {
+            "id": 5,
+            "user_id": 1,
+            "destination": "BRASIL",
+            "name": "Recife , BRAZIL",
+            "start_date": "2025-08-28",
+            "end_date": "2025-08-17"
+        },
+        {
+            "id": 6,
+            "user_id": 2,
+            "destination": "Recife, Pernambuco - Brazil ",
+            "name": "Recife , BRAZIL",
+            "start_date": "2025-08-20",
+            "end_date": "2025-09-04"
+        },
+        {
+            "id": 7,
+            "user_id": 2,
+            "destination": "Madrid, SPAIN ",
+            "name": "TRIP TO MADRID ",
+            "start_date": "2025-08-27",
+            "end_date": "2025-08-26"
+        },
+        {
+            "id": 8,
+            "user_id": 5,
+            "destination": "BRASIL",
+            "name": "Recife , BRAZIL",
+            "start_date": "2025-08-20",
+            "end_date": "2025-08-23",
+            "is_suggestion": false
+        },
+        {
+            "id": 9,
+            "user_id": 6,
+            "destination": "Praias Paradis\u00edacas ",
+            "name": "Recife , BRAZIL",
+            "start_date": "2025-08-20",
+            "end_date": "2025-08-20",
+            "is_suggestion": false
         }
     ],
     "flights": [

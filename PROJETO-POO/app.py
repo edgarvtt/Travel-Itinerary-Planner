@@ -1,41 +1,54 @@
 # app.py
 import json
 import os
+import random
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-# --- Classes ---
+# --- Classes de Modelo (POO) ---
 class User:
     def __init__(self, id, name, email, password):
-        self.id, self.name, self.email, self.password = id, name, email, password
+        self.id = id
+        self.name = name
+        self.email = email
+        self.password = password
+
     def to_dict(self):
         return {"id": self.id, "name": self.name, "email": self.email}
 
 class Trip:
-    def __init__(self, id, user_id, destination, name, start_date, end_date):
-        self.id, self.user_id, self.destination, self.name, self.start_date, self.end_date = id, user_id, destination, name, start_date, end_date
+    def __init__(self, id, user_id, destination, name, start_date, end_date, is_suggestion=False):
+        self.id = id
+        self.user_id = user_id
+        self.destination = destination
+        self.name = name
+        self.start_date = start_date
+        self.end_date = end_date
+        self.is_suggestion = is_suggestion
+    
     def to_dict(self):
-        return {"id": self.id, "user_id": self.user_id, "destination": self.destination, "name": self.name, "start_date": self.start_date, "end_date": self.end_date}
+        return {
+            "id": self.id, "user_id": self.user_id, "destination": self.destination, 
+            "name": self.name, "start_date": self.start_date, "end_date": self.end_date,
+            "is_suggestion": self.is_suggestion
+        }
 
 class Flight:
-    def __init__(self, id, trip_id, company, code, departure, arrival):
-        self.id, self.trip_id, self.company, self.code, self.departure, self.arrival = id, trip_id, company, code, departure, arrival
-    def to_dict(self):
-        return {"id": self.id, "trip_id": self.trip_id, "company": self.company, "code": self.code, "departure": self.departure, "arrival": self.arrival}
+    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):
+        self.id, self.trip_id, self.company, self.code, self.departure, self.arrival, self.is_done = id, trip_id, company, code, departure, arrival, is_done
+    def to_dict(self): return {"id": self.id, "trip_id": self.trip_id, "company": self.company, "code": self.code, "departure": self.departure, "arrival": self.arrival, "is_done": self.is_done}
 
 class Hotel:
-    def __init__(self, id, trip_id, name, checkin, checkout):
-        self.id, self.trip_id, self.name, self.checkin, self.checkout = id, trip_id, name, checkin, checkout
-    def to_dict(self):
-        return {"id": self.id, "trip_id": self.trip_id, "name": self.name, "checkin": self.checkin, "checkout": self.checkout}
+    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):
+        self.id, self.trip_id, self.name, self.checkin, self.checkout, self.is_done = id, trip_id, name, checkin, checkout, is_done
+    def to_dict(self): return {"id": self.id, "trip_id": self.trip_id, "name": self.name, "checkin": self.checkin, "checkout": self.checkout, "is_done": self.is_done}
 
 class Activity:
-    def __init__(self, id, trip_id, description, date):
-        self.id, self.trip_id, self.description, self.date = id, trip_id, description, date
-    def to_dict(self):
-        return {"id": self.id, "trip_id": self.trip_id, "description": self.description, "date": self.date}
+    def __init__(self, id, trip_id, description, date, is_done=False):
+        self.id, self.trip_id, self.description, self.date, self.is_done = id, trip_id, description, date, is_done
+    def to_dict(self): return {"id": self.id, "trip_id": self.trip_id, "description": self.description, "date": self.date, "is_done": self.is_done}
 
-# --- Classe de Armazenamento com Persistência em JSON --- mantém os dados salvos como um banco de dados
+# --- Classe de Armazenamento com Persistência em JSON ---
 class DataStore:
     def __init__(self, filename='database.json'):
         self._filename = filename
@@ -43,61 +56,122 @@ class DataStore:
 
     def _load_data(self):
         if not os.path.exists(self._filename):
-            return {"users": [], "trips": [], "flights": [], "hotels": [], "activities": []}
+            default_data = {
+                "users": [], 
+                "trips": [
+                    {"id": 1, "user_id": 0, "destination": "Costa Rica", "name": "Aventura na Selva", "start_date": "2025-07-10", "end_date": "2025-07-20", "is_suggestion": True},
+                    {"id": 2, "user_id": 0, "destination": "Kyoto, Japão", "name": "Templos e Tradições", "start_date": "2025-04-05", "end_date": "2025-04-15", "is_suggestion": True}
+                ], 
+                "flights": [], "hotels": [], "activities": []
+            }
+            with open(self._filename, 'w') as f: json.dump(default_data, f, indent=4)
+            return default_data
+        
         with open(self._filename, 'r') as f:
             try:
-                return json.load(f)
-            except json.JSONDecodeError: # Lida com arquivo JSON vazio ou corrompido
+                data = json.load(f)
+                for key in ["users", "trips", "flights", "hotels", "activities"]: data.setdefault(key, [])
+                return data
+            except (json.JSONDecodeError, TypeError): 
                 return {"users": [], "trips": [], "flights": [], "hotels": [], "activities": []}
 
     def _save_data(self):
-        with open(self._filename, 'w') as f:
-            json.dump(self._data, f, indent=4)
+        with open(self._filename, 'w') as f: json.dump(self._data, f, indent=4)
 
     def _get_next_id(self, collection_name):
-        if not self._data[collection_name]: return 1
-        return max(item['id'] for item in self._data[collection_name]) + 1
+        if not self._data.get(collection_name): return 1
+        return max(item.get('id', 0) for item in self._data[collection_name]) + 1
 
     def add_user(self, name, email, password):
         user = User(self._get_next_id('users'), name, email, password)
-        self._data['users'].append(user.__dict__); self._save_data(); return user
-
+        self._data['users'].append(user.__dict__)
+        self._save_data()
+        return user
+    
     def find_user_by_email(self, email):
-        user_data = next((u for u in self._data['users'] if u['email'] == email), None)
-        return User(**user_data) if user_data else None
-
+        user_data = next((u for u in self._data['users'] if u.get('email') == email), None)
+        if user_data:
+            return User(id=user_data.get('id'), name=user_data.get('name'), email=user_data.get('email'), password=user_data.get('password'))
+        return None
+    
     def find_user_by_id(self, user_id):
-        user_data = next((u for u in self._data['users'] if u['id'] == user_id), None)
-        return User(**user_data) if user_data else None
+        user_data = next((u for u in self._data['users'] if u.get('id') == user_id), None)
+        if user_data:
+            return User(id=user_data.get('id'), name=user_data.get('name'), email=user_data.get('email'), password=user_data.get('password'))
+        return None
 
     def add_trip(self, user_id, dest, name, start, end):
-        trip = Trip(self._get_next_id('trips'), user_id, dest, name, start, end)
-        self._data['trips'].append(trip.__dict__); self._save_data(); return trip
+        trip = Trip(self._get_next_id('trips'), user_id, dest, name, start, end, is_suggestion=False)
+        self._data['trips'].append(trip.__dict__)
+        self._save_data()
+        return trip
 
     def find_trip_by_id(self, trip_id):
-        trip_data = next((t for t in self._data['trips'] if t['id'] == trip_id), None)
-        return Trip(**trip_data) if trip_data else None
+        trip_data = next((t for t in self._data['trips'] if t.get('id') == trip_id), None)
+        if trip_data:
+            return Trip(
+                id=trip_data.get('id'), user_id=trip_data.get('user_id'),
+                destination=trip_data.get('destination'), name=trip_data.get('name'),
+                start_date=trip_data.get('start_date'), end_date=trip_data.get('end_date'),
+                is_suggestion=trip_data.get('is_suggestion', False)
+            )
+        return None
         
-    def get_all_trips(self):
-        return [Trip(**t) for t in self._data['trips']]
+    def get_user_trips(self, user_id):
+        results = []
+        for t_data in self._data.get('trips', []):
+            if t_data.get('user_id') == user_id and not t_data.get('is_suggestion', False):
+                results.append(Trip(
+                    id=t_data.get('id'), user_id=t_data.get('user_id'),
+                    destination=t_data.get('destination'), name=t_data.get('name'),
+                    start_date=t_data.get('start_date'), end_date=t_data.get('end_date'),
+                    is_suggestion=t_data.get('is_suggestion', False)
+                ))
+        return results
+
+    def get_suggestion_trips(self):
+        results = []
+        for t_data in self._data.get('trips', []):
+            if t_data.get('is_suggestion', False):
+                results.append(Trip(
+                    id=t_data.get('id'), user_id=t_data.get('user_id'),
+                    destination=t_data.get('destination'), name=t_data.get('name'),
+                    start_date=t_data.get('start_date'), end_date=t_data.get('end_date'),
+                    is_suggestion=t_data.get('is_suggestion', True)
+                ))
+        return results
+    
+    def _update_item_status(self, collection_name, item_id, is_done):
+        for item in self._data.get(collection_name, []):
+            if item.get('id') == item_id:
+                item['is_done'] = is_done
+                self._save_data()
+                return item
+        return None
 
     def add_flight(self, trip_id, company, code, departure, arrival):
         flight = Flight(self._get_next_id('flights'), trip_id, company, code, departure, arrival)
-        self._data['flights'].append(flight.__dict__); self._save_data(); return flight
+        self._data['flights'].append(flight.__dict__)
+        self._save_data()
+        return flight
 
     def add_hotel(self, trip_id, name, checkin, checkout):
         hotel = Hotel(self._get_next_id('hotels'), trip_id, name, checkin, checkout)
-        self._data['hotels'].append(hotel.__dict__); self._save_data(); return hotel
+        self._data['hotels'].append(hotel.__dict__)
+        self._save_data()
+        return hotel
 
     def add_activity(self, trip_id, description, date):
         activity = Activity(self._get_next_id('activities'), trip_id, description, date)
-        self._data['activities'].append(activity.__dict__); self._save_data(); return activity
+        self._data['activities'].append(activity.__dict__)
+        self._save_data()
+        return activity
 
     def get_details_for_trip(self, trip_id):
         return {
-            "flights": [f for f in self._data['flights'] if f['trip_id'] == trip_id],
-            "hotels": [h for h in self._data['hotels'] if h['trip_id'] == trip_id],
-            "activities": [a for a in self._data['activities'] if a['trip_id'] == trip_id]
+            "flights": [f for f in self._data.get('flights', []) if f.get('trip_id') == trip_id],
+            "hotels": [h for h in self._data.get('hotels', []) if h.get('trip_id') == trip_id],
+            "activities": [a for a in self._data.get('activities', []) if a.get('trip_id') == trip_id]
         }
 
 # --- Configuração da Aplicação ---
@@ -108,65 +182,145 @@ db = DataStore()
 # --- Rotas da API ---
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    data = request.get_json();
-    if db.find_user_by_email(data['email']): return jsonify({'message': 'Email já existe.'}), 409
-    user = db.add_user(data['name'], data['email'], data['password']); return jsonify({'user': user.to_dict()}), 201
+    try:
+        data = request.get_json()
+        if not data or not all(key in data for key in ['name', 'email', 'password']):
+            return jsonify({'message': 'Dados incompletos.'}), 400
+        if db.find_user_by_email(data['email']): 
+            return jsonify({'message': 'Este email já está em uso.'}), 409
+        user = db.add_user(data['name'], data['email'], data['password'])
+        return jsonify({'user': user.to_dict()}), 201
+    except Exception as e:
+        print(f"ERRO em signup: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    data = request.get_json(); user = db.find_user_by_email(data['email'])
-    if user and user.password == data['password']: return jsonify({'user': user.to_dict()}), 200
-    return jsonify({'message': 'Credenciais inválidas.'}), 401
-
-@app.route('/api/trips', methods=['GET', 'POST'])
-def handle_trips():
-    if request.method == 'GET':
-        all_trips = db.get_all_trips()
-        return jsonify({"trips": [t.to_dict() for t in all_trips]}), 200
-    
-    if request.method == 'POST':
+    try:
         data = request.get_json()
-        if not db.find_user_by_id(data.get('user_id')): return jsonify({'message': 'Usuário não encontrado.'}), 404
+        user = db.find_user_by_email(data['email'])
+        if user and user.password == data['password']: 
+            return jsonify({'user': user.to_dict()}), 200
+        return jsonify({'message': 'Credenciais inválidas.'}), 401
+    except Exception as e:
+        print(f"ERRO em login: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+@app.route('/api/trips', methods=['POST'])
+def create_trip():
+    try:
+        data = request.get_json()
+        if not db.find_user_by_id(data.get('user_id')): 
+            return jsonify({'message': 'Usuário não encontrado.'}), 404
         trip = db.add_trip(data['user_id'], data['destination'], data['name'], data['start_date'], data['end_date'])
         return jsonify({'trip': trip.to_dict()}), 201
+    except Exception as e:
+        print(f"ERRO em create_trip: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+@app.route('/api/my-trips', methods=['GET'])
+def get_my_trips():
+    try:
+        user_id_str = request.args.get('user_id')
+        if not user_id_str: 
+            return jsonify({'message': 'user_id é obrigatório.'}), 400
+        user_trips = db.get_user_trips(int(user_id_str))
+        return jsonify({"trips": [t.to_dict() for t in user_trips]}), 200
+    except Exception as e:
+        print(f"ERRO em get_my_trips: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+@app.route('/api/suggestions', methods=['GET'])
+def get_suggestions():
+    try:
+        suggestion_trips = db.get_suggestion_trips()
+        return jsonify({"trips": [t.to_dict() for t in suggestion_trips]}), 200
+    except Exception as e:
+        print(f"ERRO em get_suggestions: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/trips/<int:trip_id>', methods=['GET'])
 def get_trip(trip_id):
-    trip = db.find_trip_by_id(trip_id)
-    if trip: return jsonify({'trip': trip.to_dict()}), 200
-    return jsonify({'message': 'Viagem não encontrada.'}), 404
+    try:
+        trip = db.find_trip_by_id(trip_id)
+        if trip: 
+            return jsonify({'trip': trip.to_dict()}), 200
+        return jsonify({'message': 'Viagem não encontrada.'}), 404
+    except Exception as e:
+        print(f"ERRO em get_trip: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/trips/<int:trip_id>/details', methods=['GET'])
 def get_trip_details(trip_id):
-    trip = db.find_trip_by_id(trip_id)
-    if not trip: return jsonify({'message': 'Viagem não encontrada.'}), 404
-    details = db.get_details_for_trip(trip_id)
-    details['suggestions'] = [
-        {"type": "Restaurante", "name": f"Comida Típica de {trip.destination}"},
-        {"type": "Ponto Turístico", "name": f"Monumento Principal de {trip.destination}"}
-    ]
-    return jsonify(details), 200
+    try:
+        trip = db.find_trip_by_id(trip_id)
+        if not trip: 
+            return jsonify({'message': 'Viagem não encontrada.'}), 404
+        details = db.get_details_for_trip(trip_id)
+        details['suggestions'] = [
+            {"type": "Restaurante", "name": f"Comida Típica de {trip.destination}"},
+            {"type": "Ponto Turístico", "name": f"Monumento Principal de {trip.destination}"}
+        ]
+        return jsonify(details), 200
+    except Exception as e:
+        print(f"ERRO em get_trip_details: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/trips/<int:trip_id>/flights', methods=['POST'])
 def add_flight_to_trip(trip_id):
-    if not db.find_trip_by_id(trip_id): return jsonify({'message': 'Viagem não encontrada.'}), 404
-    data = request.get_json()
-    flight = db.add_flight(trip_id, data['company'], data['code'], data['departure'], data['arrival'])
-    return jsonify({'flight': flight.to_dict()}), 201
+    try:
+        if not db.find_trip_by_id(trip_id): 
+            return jsonify({'message': 'Viagem não encontrada.'}), 404
+        data = request.get_json()
+        flight = db.add_flight(trip_id, data['company'], data['code'], data['departure'], data['arrival'])
+        return jsonify({'flight': flight.to_dict()}), 201
+    except Exception as e:
+        print(f"ERRO em add_flight_to_trip: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/trips/<int:trip_id>/hotels', methods=['POST'])
 def add_hotel_to_trip(trip_id):
-    if not db.find_trip_by_id(trip_id): return jsonify({'message': 'Viagem não encontrada.'}), 404
-    data = request.get_json()
-    hotel = db.add_hotel(trip_id, data['name'], data['checkin'], data['checkout'])
-    return jsonify({'hotel': hotel.to_dict()}), 201
+    try:
+        if not db.find_trip_by_id(trip_id): 
+            return jsonify({'message': 'Viagem não encontrada.'}), 404
+        data = request.get_json()
+        hotel = db.add_hotel(trip_id, data['name'], data['checkin'], data['checkout'])
+        return jsonify({'hotel': hotel.to_dict()}), 201
+    except Exception as e:
+        print(f"ERRO em add_hotel_to_trip: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 @app.route('/api/trips/<int:trip_id>/activities', methods=['POST'])
 def add_activity_to_trip(trip_id):
-    if not db.find_trip_by_id(trip_id): return jsonify({'message': 'Viagem não encontrada.'}), 404
-    data = request.get_json()
-    activity = db.add_activity(trip_id, data['description'], data['date'])
-    return jsonify({'activity': activity.to_dict()}), 201
+    try:
+        if not db.find_trip_by_id(trip_id): 
+            return jsonify({'message': 'Viagem não encontrada.'}), 404
+        data = request.get_json()
+        activity = db.add_activity(trip_id, data['description'], data['date'])
+        return jsonify({'activity': activity.to_dict()}), 201
+    except Exception as e:
+        print(f"ERRO em add_activity_to_trip: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+def update_item_status(item_type, item_id):
+    try:
+        data = request.get_json()
+        if 'is_done' not in data: 
+            return jsonify({'message': 'Missing is_done field'}), 400
+        updated_item = db._update_item_status(f'{item_type}s', item_id, data['is_done'])
+        if updated_item: 
+            return jsonify(updated_item), 200
+        return jsonify({'message': f'{item_type.capitalize()} not found'}), 404
+    except Exception as e:
+        print(f"ERRO em update_{item_type}_status: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+@app.route('/api/flights/<int:item_id>/status', methods=['PATCH'])
+def update_flight_status(item_id): return update_item_status('flight', item_id)
+@app.route('/api/hotels/<int:item_id>/status', methods=['PATCH'])
+def update_hotel_status(item_id): return update_item_status('hotel', item_id)
+@app.route('/api/activities/<int:item_id>/status', methods=['PATCH'])
+def update_activity_status(item_id): return update_item_status('activity', item_id)
 
 if __name__ == '__main__':
     app.run(debug=True)
