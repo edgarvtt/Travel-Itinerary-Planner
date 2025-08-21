@@ -1,4 +1,5 @@
 # app.py
+# app.py
 import json
 import os
 import random
@@ -8,29 +9,18 @@ from flask_cors import CORS
 # --- Classes de Modelo (POO) ---
 class User:
     def __init__(self, id, name, email, password):
-        self.id = id
-        self.name = name
-        self.email = email
-        self.password = password
-
-    def to_dict(self):
-        return {"id": self.id, "name": self.name, "email": self.email}
+        self.id, self.name, self.email, self.password = id, name, email, password
+    def to_dict(self): return {"id": self.id, "name": self.name, "email": self.email}
 
 class Trip:
-    def __init__(self, id, user_id, destination, name, start_date, end_date, is_suggestion=False):
-        self.id = id
-        self.user_id = user_id
-        self.destination = destination
-        self.name = name
-        self.start_date = start_date
-        self.end_date = end_date
-        self.is_suggestion = is_suggestion
-    
-    def to_dict(self):
+    def __init__(self, id, user_id, destination, name, start_date, end_date, is_suggestion=False, budget=0.0):
+        self.id, self.user_id, self.destination, self.name, self.start_date, self.end_date, self.is_suggestion = id, user_id, destination, name, start_date, end_date, is_suggestion
+        self.budget = budget
+    def to_dict(self): 
         return {
             "id": self.id, "user_id": self.user_id, "destination": self.destination, 
             "name": self.name, "start_date": self.start_date, "end_date": self.end_date,
-            "is_suggestion": self.is_suggestion
+            "is_suggestion": self.is_suggestion, "budget": self.budget
         }
 
 class Flight:
@@ -48,7 +38,6 @@ class Activity:
         self.id, self.trip_id, self.description, self.date, self.is_done = id, trip_id, description, date, is_done
     def to_dict(self): return {"id": self.id, "trip_id": self.trip_id, "description": self.description, "date": self.date, "is_done": self.is_done}
 
-# --- NOVA CLASSE PARA DESPESAS ---
 class Expense:
     def __init__(self, id, trip_id, description, amount, currency, date, category):
         self.id, self.trip_id, self.description, self.amount, self.currency, self.date, self.category = id, trip_id, description, amount, currency, date, category
@@ -65,8 +54,8 @@ class DataStore:
             default_data = {
                 "users": [], 
                 "trips": [
-                    {"id": 1, "user_id": 0, "destination": "Costa Rica", "name": "Aventura na Selva", "start_date": "2025-07-10", "end_date": "2025-07-20", "is_suggestion": True},
-                    {"id": 2, "user_id": 0, "destination": "Kyoto, Japão", "name": "Templos e Tradições", "start_date": "2025-04-05", "end_date": "2025-04-15", "is_suggestion": True}
+                    {"id": 1, "user_id": 0, "destination": "Costa Rica", "name": "Aventura na Selva", "start_date": "2025-07-10", "end_date": "2025-07-20", "is_suggestion": True, "budget": 5000.0},
+                    {"id": 2, "user_id": 0, "destination": "Kyoto, Japão", "name": "Templos e Tradições", "start_date": "2025-04-05", "end_date": "2025-04-15", "is_suggestion": True, "budget": 7500.0}
                 ], 
                 "flights": [], "hotels": [], "activities": [], "expenses": []
             }
@@ -115,12 +104,7 @@ class DataStore:
     def find_trip_by_id(self, trip_id):
         trip_data = next((t for t in self._data['trips'] if t.get('id') == trip_id), None)
         if trip_data:
-            return Trip(
-                id=trip_data.get('id'), user_id=trip_data.get('user_id'),
-                destination=trip_data.get('destination'), name=trip_data.get('name'),
-                start_date=trip_data.get('start_date'), end_date=trip_data.get('end_date'),
-                is_suggestion=trip_data.get('is_suggestion', False)
-            )
+            return Trip(**trip_data)
         return None
         
     def get_user_trips(self, user_id):
@@ -137,6 +121,14 @@ class DataStore:
                 results.append(Trip(**t_data))
         return results
     
+    def update_trip_budget(self, trip_id, budget):
+        for trip in self._data['trips']:
+            if trip.get('id') == trip_id:
+                trip['budget'] = budget
+                self._save_data()
+                return Trip(**trip)
+        return None
+
     def _update_item_status(self, collection_name, item_id, is_done):
         for item in self._data.get(collection_name, []):
             if item.get('id') == item_id:
@@ -171,6 +163,14 @@ class DataStore:
         
     def get_expenses_for_trip(self, trip_id):
         return [Expense(**e) for e in self._data.get('expenses', []) if e.get('trip_id') == trip_id]
+
+    def remove_expense(self, expense_id):
+        initial_len = len(self._data['expenses'])
+        self._data['expenses'] = [e for e in self._data['expenses'] if e.get('id') != expense_id]
+        if len(self._data['expenses']) < initial_len:
+            self._save_data()
+            return True
+        return False
 
     def get_details_for_trip(self, trip_id):
         return {
@@ -255,6 +255,21 @@ def get_trip(trip_id):
         print(f"ERRO em get_trip: {e}")
         return jsonify({'message': 'Erro interno no servidor.'}), 500
 
+@app.route('/api/trips/<int:trip_id>/budget', methods=['PATCH'])
+def update_budget(trip_id):
+    try:
+        data = request.get_json()
+        if 'budget' not in data:
+            return jsonify({'message': 'Orçamento em falta.'}), 400
+        
+        updated_trip = db.update_trip_budget(trip_id, float(data['budget']))
+        if updated_trip:
+            return jsonify({'trip': updated_trip.to_dict()}), 200
+        return jsonify({'message': 'Viagem não encontrada.'}), 404
+    except Exception as e:
+        print(f"ERRO em update_budget: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
+
 @app.route('/api/trips/<int:trip_id>/details', methods=['GET'])
 def get_trip_details(trip_id):
     try:
@@ -307,7 +322,6 @@ def add_activity_to_trip(trip_id):
         print(f"ERRO em add_activity_to_trip: {e}")
         return jsonify({'message': 'Erro interno no servidor.'}), 500
 
-# --- ROTA DE DESPESAS ---
 @app.route('/api/trips/<int:trip_id>/expenses', methods=['GET', 'POST'])
 def handle_expenses(trip_id):
     if not db.find_trip_by_id(trip_id):
@@ -327,6 +341,16 @@ def handle_expenses(trip_id):
         except Exception as e:
             print(f"ERRO em add_expense: {e}")
             return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+@app.route('/api/expenses/<int:expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
+    try:
+        if db.remove_expense(expense_id):
+            return jsonify({'message': 'Despesa removida com sucesso.'}), 200
+        return jsonify({'message': 'Despesa não encontrada.'}), 404
+    except Exception as e:
+        print(f"ERRO em delete_expense: {e}")
+        return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 def update_item_status(item_type, item_id):
     try:

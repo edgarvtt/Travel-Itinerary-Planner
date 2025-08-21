@@ -123,6 +123,16 @@
             "start_date": "2025-08-20",
             "end_date": "2025-08-20",
             "is_suggestion": false
+        },
+        {
+            "id": 10,
+            "user_id": 8,
+            "destination": "Madrid, SPAIN ",
+            "name": "Ilha de Itamarac\u00e1 ",
+            "start_date": "2025-08-27",
+            "end_date": "2025-08-04",
+            "is_suggestion": false,
+            "budget": 500.0
         }
     ],
     "flights": [
@@ -167,6 +177,15 @@
             "trip_id": 8,
             "description": "Uber",
             "amount": 25.5,
+            "currency": "BRL",
+            "date": "2025-08-21",
+            "category": "alimentacao"
+        },
+        {
+            "id": 2,
+            "trip_id": 10,
+            "description": "Uber",
+            "amount": 26,
             "currency": "BRL",
             "date": "2025-08-21",
             "category": "alimentacao"

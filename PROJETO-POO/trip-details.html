@@ -47,8 +47,22 @@
                 <section id="budget-section">
                     <h2 class="text-2xl font-bold text-gray-800 mb-4">Controle de Orçamento</h2>
                     <div class="bg-white p-6 rounded-xl shadow-md">
-                        <!-- Formulário para adicionar despesa -->
-                        <form id="expense-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end mb-6">
+                        <!-- Definição do Orçamento -->
+                        <div class="flex items-center gap-4 mb-6 pb-6 border-b">
+                            <label for="trip-budget-input" class="font-semibold whitespace-nowrap">Orçamento Total (BRL):</label>
+                            <input type="number" id="trip-budget-input" placeholder="Ex: 5000.00" step="0.01" class="w-full p-2 border rounded">
+                            <button id="set-budget-btn" class="bg-blue-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-600">Definir</button>
+                        </div>
+                        
+                        <!-- Painel do Orçamento -->
+                        <div class="grid grid-cols-3 gap-4 text-center mb-6">
+                            <div><p class="text-sm text-gray-500">Orçamento Total</p><p id="total-budget" class="text-2xl font-bold text-blue-600">R$ 0,00</p></div>
+                            <div><p class="text-sm text-gray-500">Total Gasto</p><p id="total-expenses" class="text-2xl font-bold text-red-600">R$ 0,00</p></div>
+                            <div><p class="text-sm text-gray-500">Saldo Restante</p><p id="remaining-budget" class="text-2xl font-bold text-green-600">R$ 0,00</p></div>
+                        </div>
+
+                        <form id="expense-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end mb-6 pt-6 border-t">
+                            <h3 class="md:col-span-2 font-bold text-lg mb-2">Adicionar Nova Despesa</h3>
                             <div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="expense-description" placeholder="Ex: Almoço" class="w-full p-2 border rounded" required></div>
                             <div><label class="block text-sm font-semibold">Valor</label><input type="number" id="expense-amount" placeholder="25.50" step="0.01" class="w-full p-2 border rounded" required></div>
                             <div><label class="block text-sm font-semibold">Moeda</label><input type="text" id="expense-currency" value="BRL" class="w-full p-2 border rounded bg-gray-100" required></div>
@@ -66,12 +80,9 @@
                         
                         <!-- Lista de Despesas -->
                         <div class="border-t pt-4">
-                            <h3 class="font-bold text-lg mb-2">Despesas Registadas</h3>
+                            <h3 class="font-bold text-lg mb-2">Despesas Registradas</h3>
                             <div id="expenses-list" class="space-y-2">
                                 <p class="text-gray-500">Nenhuma despesa registada.</p>
-                            </div>
-                            <div class="text-right font-bold text-xl mt-4">
-                                Total Gasto: <span id="total-expenses" class="text-red-600">R$ 0,00</span>
                             </div>
                         </div>
                     </div>
@@ -105,6 +116,7 @@
             feather.replace();
             const urlParams = new URLSearchParams(window.location.search);
             const tripId = parseInt(urlParams.get('id'));
+            let currentBudget = 0;
 
             if (!tripId) { document.querySelector('main').innerHTML = '<p class="text-red-500 text-center">ID da viagem não encontrado.</p>'; return; }
 
@@ -134,25 +146,36 @@
                 suggestions.forEach(s => { list.innerHTML += `<div class="bg-blue-50 p-3 rounded-lg"><p class="font-semibold">${s.name}</p><span class="text-xs text-blue-700">${s.type}</span></div>`; });
             };
 
+            const updateBudgetDisplay = (totalSpent) => {
+                const totalBudgetEl = document.getElementById('total-budget');
+                const totalExpensesEl = document.getElementById('total-expenses');
+                const remainingBudgetEl = document.getElementById('remaining-budget');
+                
+                const remaining = currentBudget - totalSpent;
+
+                totalBudgetEl.textContent = `R$ ${currentBudget.toFixed(2)}`;
+                totalExpensesEl.textContent = `R$ ${totalSpent.toFixed(2)}`;
+                remainingBudgetEl.textContent = `R$ ${remaining.toFixed(2)}`;
+                
+                remainingBudgetEl.classList.remove('text-green-600', 'text-red-600');
+                remainingBudgetEl.classList.add(remaining >= 0 ? 'text-green-600' : 'text-red-600');
+            };
+
             const renderExpenses = (expenses) => {
                 const list = document.getElementById('expenses-list');
-                const totalEl = document.getElementById('total-expenses');
-                let total = 0;
+                let totalSpent = 0;
                 list.innerHTML = expenses.length ? '' : '<p class="text-gray-500">Nenhuma despesa registada.</p>';
                 
                 expenses.forEach(e => {
-                    total += parseFloat(e.amount);
+                    totalSpent += parseFloat(e.amount);
                     list.innerHTML += `
-                        <div class="flex justify-between items-center bg-gray-50 p-2 rounded">
-                            <div>
-                                <p class="font-semibold">${e.description}</p>
-                                <p class="text-xs text-gray-500">${e.category} - ${new Date(e.date).toLocaleDateString()}</p>
-                            </div>
-                            <p class="font-bold text-red-500">${e.currency} ${parseFloat(e.amount).toFixed(2)}</p>
-                        </div>
-                    `;
+                        <div class="flex justify-between items-center bg-gray-50 p-2 rounded" id="expense-${e.id}">
+                            <div><p class="font-semibold">${e.description}</p><p class="text-xs text-gray-500">${e.category} - ${new Date(e.date).toLocaleDateString()}</p></div>
+                            <div class="flex items-center"><p class="font-bold text-red-500 mr-4">${e.currency} ${parseFloat(e.amount).toFixed(2)}</p><button class="remove-expense-btn text-gray-400 hover:text-red-600" data-expense-id="${e.id}"><i data-feather="trash-2" class="w-4 h-4"></i></button></div>
+                        </div>`;
                 });
-                totalEl.textContent = `R$ ${total.toFixed(2)}`;
+                updateBudgetDisplay(totalSpent);
+                feather.replace();
             };
 
             // --- Lógica de Eventos ---
@@ -180,18 +203,18 @@
             // --- Carregamento de Dados (MAIS ROBUSTO) ---
             async function loadTripData() {
                 try {
-                    // 1. Carrega os dados essenciais primeiro
-                    const tripRes = await fetch(`http://127.0.0.1:5000/api/trips/${tripId}`);
-                    if (!tripRes.ok) throw new Error('Viagem não encontrada. Não foi possível carregar os dados.');
-                    const { trip } = await tripRes.json();
-                    document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
-
-                    // 2. Carrega os detalhes e despesas em paralelo
-                    const [detailsRes, expensesRes] = await Promise.all([
+                    const [tripRes, detailsRes, expensesRes] = await Promise.all([
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}`),
                         fetch(`http://127.0.0.1:5000/api/trips/${tripId}/details`),
                         fetch(`http://127.0.0.1:5000/api/trips/${tripId}/expenses`)
                     ]);
-
+                    if (!tripRes.ok) throw new Error('Viagem não encontrada. Não foi possível carregar os dados.');
+                    
+                    const { trip } = await tripRes.json();
+                    currentBudget = parseFloat(trip.budget) || 0;
+                    document.getElementById('trip-budget-input').value = currentBudget.toFixed(2);
+                    document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
+                    
                     if (detailsRes.ok) {
                         const details = await detailsRes.json();
                         renderItem('flights-list', details.flights, flightHTML, 'Nenhum voo adicionado.');
@@ -203,14 +226,13 @@
                     if (expensesRes.ok) {
                         const { expenses } = await expensesRes.json();
                         renderExpenses(expenses);
+                    } else {
+                        renderExpenses([]);
                     }
                     
                     feather.replace();
                     document.querySelectorAll('.item-checkbox').forEach(cb => cb.addEventListener('change', handleCheckboxChange));
-
-                } catch (error) {
-                    document.getElementById('trip-header').innerHTML = `<p class="text-red-500">${error.message}</p>`;
-                }
+                } catch (error) { document.getElementById('trip-header').innerHTML = `<p class="text-red-500">${error.message}</p>`; }
             }
             
             // --- Submissão de Formulários (UNIFICADO) ---
@@ -263,6 +285,36 @@
                 category: document.getElementById('expense-category').value,
                 date: new Date().toISOString().split('T')[0]
             }));
+
+            document.getElementById('set-budget-btn').addEventListener('click', async () => {
+                const newBudget = parseFloat(document.getElementById('trip-budget-input').value);
+                try {
+                    const response = await fetch(`http://127.0.0.1:5000/api/trips/${tripId}/budget`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ budget: newBudget })
+                    });
+                    if (!response.ok) throw new Error('Falha ao definir orçamento.');
+                    currentBudget = newBudget;
+                    loadTripData();
+                } catch (error) {
+                    alert(`Erro: ${error.message}`);
+                }
+            });
+
+            document.getElementById('expenses-list').addEventListener('click', async (e) => {
+                const removeButton = e.target.closest('.remove-expense-btn');
+                if (removeButton) {
+                    const expenseId = removeButton.dataset.expenseId;
+                    try {
+                        const response = await fetch(`http://127.0.0.1:5000/api/expenses/${expenseId}`, { method: 'DELETE' });
+                        if (!response.ok) throw new Error('Falha ao remover despesa.');
+                        loadTripData();
+                    } catch (error) {
+                        alert(`Erro: ${error.message}`);
+                    }
+                }
+            });
 
             loadTripData();
         });
