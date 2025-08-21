@@ -48,6 +48,12 @@ class Activity:
         self.id, self.trip_id, self.description, self.date, self.is_done = id, trip_id, description, date, is_done
     def to_dict(self): return {"id": self.id, "trip_id": self.trip_id, "description": self.description, "date": self.date, "is_done": self.is_done}
 
+# --- NOVA CLASSE PARA DESPESAS ---
+class Expense:
+    def __init__(self, id, trip_id, description, amount, currency, date, category):
+        self.id, self.trip_id, self.description, self.amount, self.currency, self.date, self.category = id, trip_id, description, amount, currency, date, category
+    def to_dict(self): return self.__dict__
+
 # --- Classe de Armazenamento com Persistência em JSON ---
 class DataStore:
     def __init__(self, filename='database.json'):
@@ -62,7 +68,7 @@ class DataStore:
                     {"id": 1, "user_id": 0, "destination": "Costa Rica", "name": "Aventura na Selva", "start_date": "2025-07-10", "end_date": "2025-07-20", "is_suggestion": True},
                     {"id": 2, "user_id": 0, "destination": "Kyoto, Japão", "name": "Templos e Tradições", "start_date": "2025-04-05", "end_date": "2025-04-15", "is_suggestion": True}
                 ], 
-                "flights": [], "hotels": [], "activities": []
+                "flights": [], "hotels": [], "activities": [], "expenses": []
             }
             with open(self._filename, 'w') as f: json.dump(default_data, f, indent=4)
             return default_data
@@ -70,10 +76,10 @@ class DataStore:
         with open(self._filename, 'r') as f:
             try:
                 data = json.load(f)
-                for key in ["users", "trips", "flights", "hotels", "activities"]: data.setdefault(key, [])
+                for key in ["users", "trips", "flights", "hotels", "activities", "expenses"]: data.setdefault(key, [])
                 return data
             except (json.JSONDecodeError, TypeError): 
-                return {"users": [], "trips": [], "flights": [], "hotels": [], "activities": []}
+                return {"users": [], "trips": [], "flights": [], "hotels": [], "activities": [], "expenses": []}
 
     def _save_data(self):
         with open(self._filename, 'w') as f: json.dump(self._data, f, indent=4)
@@ -121,24 +127,14 @@ class DataStore:
         results = []
         for t_data in self._data.get('trips', []):
             if t_data.get('user_id') == user_id and not t_data.get('is_suggestion', False):
-                results.append(Trip(
-                    id=t_data.get('id'), user_id=t_data.get('user_id'),
-                    destination=t_data.get('destination'), name=t_data.get('name'),
-                    start_date=t_data.get('start_date'), end_date=t_data.get('end_date'),
-                    is_suggestion=t_data.get('is_suggestion', False)
-                ))
+                results.append(Trip(**t_data))
         return results
 
     def get_suggestion_trips(self):
         results = []
         for t_data in self._data.get('trips', []):
             if t_data.get('is_suggestion', False):
-                results.append(Trip(
-                    id=t_data.get('id'), user_id=t_data.get('user_id'),
-                    destination=t_data.get('destination'), name=t_data.get('name'),
-                    start_date=t_data.get('start_date'), end_date=t_data.get('end_date'),
-                    is_suggestion=t_data.get('is_suggestion', True)
-                ))
+                results.append(Trip(**t_data))
         return results
     
     def _update_item_status(self, collection_name, item_id, is_done):
@@ -166,6 +162,15 @@ class DataStore:
         self._data['activities'].append(activity.__dict__)
         self._save_data()
         return activity
+    
+    def add_expense(self, trip_id, description, amount, currency, date, category):
+        expense = Expense(self._get_next_id('expenses'), trip_id, description, amount, currency, date, category)
+        self._data['expenses'].append(expense.__dict__)
+        self._save_data()
+        return expense
+        
+    def get_expenses_for_trip(self, trip_id):
+        return [Expense(**e) for e in self._data.get('expenses', []) if e.get('trip_id') == trip_id]
 
     def get_details_for_trip(self, trip_id):
         return {
@@ -301,6 +306,27 @@ def add_activity_to_trip(trip_id):
     except Exception as e:
         print(f"ERRO em add_activity_to_trip: {e}")
         return jsonify({'message': 'Erro interno no servidor.'}), 500
+
+# --- ROTA DE DESPESAS ---
+@app.route('/api/trips/<int:trip_id>/expenses', methods=['GET', 'POST'])
+def handle_expenses(trip_id):
+    if not db.find_trip_by_id(trip_id):
+        return jsonify({'message': 'Viagem não encontrada.'}), 404
+    if request.method == 'GET':
+        try:
+            expenses = db.get_expenses_for_trip(trip_id)
+            return jsonify({"expenses": [e.to_dict() for e in expenses]}), 200
+        except Exception as e:
+            print(f"ERRO em get_expenses: {e}")
+            return jsonify({'message': 'Erro interno no servidor.'}), 500
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            expense = db.add_expense(trip_id, data['description'], data['amount'], data['currency'], data['date'], data['category'])
+            return jsonify({'expense': expense.to_dict()}), 201
+        except Exception as e:
+            print(f"ERRO em add_expense: {e}")
+            return jsonify({'message': 'Erro interno no servidor.'}), 500
 
 def update_item_status(item_type, item_id):
     try:

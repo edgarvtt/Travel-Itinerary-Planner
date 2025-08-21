@@ -133,6 +133,15 @@
             "code": "2506065",
             "departure": "2025-08-22T14:03",
             "arrival": "2025-08-20T03:05"
+        },
+        {
+            "id": 2,
+            "trip_id": 8,
+            "company": "LATAM",
+            "code": "2506065",
+            "departure": "2025-08-21T04:09",
+            "arrival": "2025-08-14T03:12",
+            "is_done": true
         }
     ],
     "hotels": [
@@ -150,6 +159,17 @@
             "trip_id": 1,
             "description": "Visita ao passeio check",
             "date": "2025-08-28"
+        }
+    ],
+    "expenses": [
+        {
+            "id": 1,
+            "trip_id": 8,
+            "description": "Uber",
+            "amount": 25.5,
+            "currency": "BRL",
+            "date": "2025-08-21",
+            "category": "alimentacao"
         }
     ]
 }
