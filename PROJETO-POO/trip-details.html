@@ -80,7 +80,7 @@
                         
                         <!-- Lista de Despesas -->
                         <div class="border-t pt-4">
-                            <h3 class="font-bold text-lg mb-2">Despesas Registradas</h3>
+                            <h3 class="font-bold text-lg mb-2">Despesas Registadas</h3>
                             <div id="expenses-list" class="space-y-2">
                                 <p class="text-gray-500">Nenhuma despesa registada.</p>
                             </div>
@@ -186,9 +186,12 @@
                 const is_done = checkbox.checked;
 
                 document.getElementById(`text-${type}-${id}`).classList.toggle('item-done', is_done);
+                
+                // CORREÇÃO: Lida com o plural irregular de "activity"
+                const endpointType = type === 'activity' ? 'activities' : `${type}s`;
 
                 try {
-                    await fetch(`http://127.0.0.1:5000/api/${type}s/${id}/status`, {
+                    await fetch(`http://127.0.0.1:5000/api/${endpointType}/${id}/status`, {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ is_done })
@@ -203,18 +206,18 @@
             // --- Carregamento de Dados (MAIS ROBUSTO) ---
             async function loadTripData() {
                 try {
-                    const [tripRes, detailsRes, expensesRes] = await Promise.all([
-                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}`),
-                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}/details`),
-                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}/expenses`)
-                    ]);
+                    const tripRes = await fetch(`http://127.0.0.1:5000/api/trips/${tripId}`);
                     if (!tripRes.ok) throw new Error('Viagem não encontrada. Não foi possível carregar os dados.');
-                    
                     const { trip } = await tripRes.json();
                     currentBudget = parseFloat(trip.budget) || 0;
                     document.getElementById('trip-budget-input').value = currentBudget.toFixed(2);
                     document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
-                    
+
+                    const [detailsRes, expensesRes] = await Promise.all([
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}/details`),
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}/expenses`)
+                    ]);
+
                     if (detailsRes.ok) {
                         const details = await detailsRes.json();
                         renderItem('flights-list', details.flights, flightHTML, 'Nenhum voo adicionado.');

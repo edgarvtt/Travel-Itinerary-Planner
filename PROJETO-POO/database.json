@@ -47,6 +47,12 @@
             "name": "Edgar",
             "email": "teste2@gmail.com",
             "password": "123456"
+        },
+        {
+            "id": 9,
+            "name": "vitor",
+            "email": "vitor@gmail.com",
+            "password": "123456"
         }
     ],
     "trips": [
@@ -113,7 +119,8 @@
             "name": "Recife , BRAZIL",
             "start_date": "2025-08-20",
             "end_date": "2025-08-23",
-            "is_suggestion": false
+            "is_suggestion": false,
+            "budget": 500.0
         },
         {
             "id": 9,
@@ -133,6 +140,16 @@
             "end_date": "2025-08-04",
             "is_suggestion": false,
             "budget": 500.0
+        },
+        {
+            "id": 11,
+            "user_id": 9,
+            "destination": "Par\u00e1",
+            "name": "Bel\u00e9m",
+            "start_date": "2025-09-05",
+            "end_date": "2025-08-29",
+            "is_suggestion": false,
+            "budget": 5000.0
         }
     ],
     "flights": [
@@ -161,6 +178,14 @@
             "name": "BUGHEDT",
             "checkin": "2025-08-18",
             "checkout": "2025-08-22"
+        },
+        {
+            "id": 2,
+            "trip_id": 8,
+            "name": "teste",
+            "checkin": "2025-08-22",
+            "checkout": "2025-08-22",
+            "is_done": true
         }
     ],
     "activities": [
@@ -169,6 +194,13 @@
             "trip_id": 1,
             "description": "Visita ao passeio check",
             "date": "2025-08-28"
+        },
+        {
+            "id": 2,
+            "trip_id": 8,
+            "description": "teste",
+            "date": "2025-08-29",
+            "is_done": true
         }
     ],
     "expenses": [
@@ -189,6 +221,15 @@
             "currency": "BRL",
             "date": "2025-08-21",
             "category": "alimentacao"
+        },
+        {
+            "id": 3,
+            "trip_id": 11,
+            "description": "Uber",
+            "amount": 26,
+            "currency": "BRL",
+            "date": "2025-08-23",
+            "category": "transporte"
         }
     ]
 }

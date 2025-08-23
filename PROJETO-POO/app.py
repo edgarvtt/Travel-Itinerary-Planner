@@ -1,5 +1,4 @@
 # app.py
-# app.py
 import json
 import os
 import random
@@ -9,14 +8,26 @@ from flask_cors import CORS
 # --- Classes de Modelo (POO) ---
 class User:
     def __init__(self, id, name, email, password):
-        self.id, self.name, self.email, self.password = id, name, email, password
-    def to_dict(self): return {"id": self.id, "name": self.name, "email": self.email}
+        self.id = id
+        self.name = name
+        self.email = email
+        self.password = password
+
+    def to_dict(self):
+        return {"id": self.id, "name": self.name, "email": self.email}
 
 class Trip:
     def __init__(self, id, user_id, destination, name, start_date, end_date, is_suggestion=False, budget=0.0):
-        self.id, self.user_id, self.destination, self.name, self.start_date, self.end_date, self.is_suggestion = id, user_id, destination, name, start_date, end_date, is_suggestion
+        self.id = id
+        self.user_id = user_id
+        self.destination = destination
+        self.name = name
+        self.start_date = start_date
+        self.end_date = end_date
+        self.is_suggestion = is_suggestion
         self.budget = budget
-    def to_dict(self): 
+    
+    def to_dict(self):
         return {
             "id": self.id, "user_id": self.user_id, "destination": self.destination, 
             "name": self.name, "start_date": self.start_date, "end_date": self.end_date,
@@ -357,7 +368,11 @@ def update_item_status(item_type, item_id):
         data = request.get_json()
         if 'is_done' not in data: 
             return jsonify({'message': 'Missing is_done field'}), 400
-        updated_item = db._update_item_status(f'{item_type}s', item_id, data['is_done'])
+        
+        # CORREÇÃO: Lida com o plural irregular de "activity"
+        collection_name = 'activities' if item_type == 'activity' else f'{item_type}s'
+        
+        updated_item = db._update_item_status(collection_name, item_id, data['is_done'])
         if updated_item: 
             return jsonify(updated_item), 200
         return jsonify({'message': f'{item_type.capitalize()} not found'}), 404
