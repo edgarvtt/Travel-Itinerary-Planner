@@ -6,6 +6,7 @@
     <title>Detalhes da Viagem - Travel Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="icon.png" type="image/png">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -13,6 +14,7 @@
         .modal.is-open { display: flex; }
         .item-done { text-decoration: line-through; color: #9ca3af; }
     </style>
+
 </head>
 <body class="bg-gray-100">
 
@@ -24,300 +26,223 @@
     </header>
 
     <main class="container mx-auto p-6">
-        <div id="trip-header" class="mb-8 p-6 bg-white rounded-xl shadow-md"><div class="h-16 animate-pulse bg-gray-200 rounded-md"></div></div>
+        <div id="trip-header" class="mb-8 p-6 bg-white rounded-xl shadow-md">
+            <div class="h-16 animate-pulse bg-gray-200 rounded-md"></div>
+        </div>
+
+        <!-- Secção de Partilha -->
+        <section id="share-section" class="mb-8">
+             <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="font-bold text-lg mb-2">Partilhar e Colaborar</h3>
+                <p class="text-gray-600 mb-3 text-sm">Use este código para convidar amigos para ver e editar este roteiro:</p>
+                <div class="flex items-center gap-4 bg-gray-100 p-3 rounded-lg">
+                    <strong id="share-code-display" class="text-2xl font-mono text-blue-600 tracking-widest flex-grow">A carregar...</strong>
+                    <button id="copy-code-btn" class="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 flex items-center">
+                        <i data-feather="copy" class="w-4 h-4 mr-2"></i>Copiar
+                    </button>
+                </div>
+            </div>
+        </section>
 
         <div class="grid lg:grid-cols-3 gap-8">
             <div class="lg:col-span-2 space-y-8">
-                <!-- Voos -->
+                <!-- Voos, Hotéis, Atividades -->
                 <section id="flights-section">
                     <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Voos</h2><button onclick="openModal('flight-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button></div>
-                    <div id="flights-list" class="space-y-4"><p class="text-gray-500">Nenhum voo adicionado.</p></div>
+                    <div id="flights-list" class="space-y-4"></div>
                 </section>
-                <!-- Hotéis -->
                 <section id="hotels-section">
                     <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Hotéis</h2><button onclick="openModal('hotel-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button></div>
-                    <div id="hotels-list" class="space-y-4"><p class="text-gray-500">Nenhum hotel adicionado.</p></div>
+                    <div id="hotels-list" class="space-y-4"></div>
                 </section>
-                <!-- Atividades -->
                 <section id="activities-section">
                     <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Passeios e Atividades</h2><button onclick="openModal('activity-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button></div>
-                    <div id="activities-list" class="space-y-4"><p class="text-gray-500">Nenhuma atividade adicionada.</p></div>
+                    <div id="activities-list" class="space-y-4"></div>
                 </section>
-                 <!-- SECÇÃO: CONTROLE DE ORÇAMENTO -->
+            </div>
+            
+            <aside class="lg:col-span-1 space-y-8">
+                 <!-- Orçamento -->
                 <section id="budget-section">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Controle de Orçamento</h2>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Orçamento</h2>
                     <div class="bg-white p-6 rounded-xl shadow-md">
-                        <!-- Definição do Orçamento -->
-                        <div class="flex items-center gap-4 mb-6 pb-6 border-b">
-                            <label for="trip-budget-input" class="font-semibold whitespace-nowrap">Orçamento Total (BRL):</label>
-                            <input type="number" id="trip-budget-input" placeholder="Ex: 5000.00" step="0.01" class="w-full p-2 border rounded">
-                            <button id="set-budget-btn" class="bg-blue-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-600">Definir</button>
+                        <div class="flex items-center mb-4">
+                            <input type="number" id="budget-input" placeholder="Orçamento total" class="w-full px-4 py-2 border rounded-lg">
+                            <button id="set-budget-btn" class="ml-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600">Definir</button>
                         </div>
-                        
-                        <!-- Painel do Orçamento -->
-                        <div class="grid grid-cols-3 gap-4 text-center mb-6">
-                            <div><p class="text-sm text-gray-500">Orçamento Total</p><p id="total-budget" class="text-2xl font-bold text-blue-600">R$ 0,00</p></div>
-                            <div><p class="text-sm text-gray-500">Total Gasto</p><p id="total-expenses" class="text-2xl font-bold text-red-600">R$ 0,00</p></div>
-                            <div><p class="text-sm text-gray-500">Saldo Restante</p><p id="remaining-budget" class="text-2xl font-bold text-green-600">R$ 0,00</p></div>
-                        </div>
-
-                        <form id="expense-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end mb-6 pt-6 border-t">
-                            <h3 class="md:col-span-2 font-bold text-lg mb-2">Adicionar Nova Despesa</h3>
-                            <div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="expense-description" placeholder="Ex: Almoço" class="w-full p-2 border rounded" required></div>
-                            <div><label class="block text-sm font-semibold">Valor</label><input type="number" id="expense-amount" placeholder="25.50" step="0.01" class="w-full p-2 border rounded" required></div>
-                            <div><label class="block text-sm font-semibold">Moeda</label><input type="text" id="expense-currency" value="BRL" class="w-full p-2 border rounded bg-gray-100" required></div>
-                            <div><label class="block text-sm font-semibold">Categoria</label>
-                                <select id="expense-category" class="w-full p-2 border rounded" required>
-                                    <option value="alimentacao">Alimentação</option>
-                                    <option value="transporte">Transporte</option>
-                                    <option value="hospedagem">Hospedagem</option>
-                                    <option value="lazer">Lazer</option>
-                                    <option value="outros">Outros</option>
-                                </select>
-                            </div>
-                            <div class="md:col-span-2 text-right"><button type="submit" class="bg-green-500 text-white font-semibold py-2 px-5 rounded-lg hover:bg-green-600">Adicionar Despesa</button></div>
-                        </form>
-                        
-                        <!-- Lista de Despesas -->
-                        <div class="border-t pt-4">
-                            <h3 class="font-bold text-lg mb-2">Despesas Registadas</h3>
-                            <div id="expenses-list" class="space-y-2">
-                                <p class="text-gray-500">Nenhuma despesa registada.</p>
-                            </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center"><p class="text-gray-500">Total</p><p id="budget-total" class="font-bold text-gray-800">R$ 0.00</p></div>
+                            <div class="flex justify-between items-center"><p class="text-gray-500">Gasto</p><p id="budget-spent" class="font-bold text-red-500">R$ 0.00</p></div>
+                            <div class="flex justify-between items-center border-t pt-3"><p class="text-gray-500">Restante</p><p id="budget-remaining" class="font-bold text-green-600">R$ 0.00</p></div>
                         </div>
                     </div>
                 </section>
-            </div>
-            <aside class="lg:col-span-1">
-                <div class="bg-white p-6 rounded-xl shadow-md">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Sugestões para você</h3>
-                    <div id="suggestions-list" class="space-y-4"><p class="text-gray-500">Carregando sugestões...</p></div>
-                </div>
+                 <!-- Despesas -->
+                <section id="expenses-section">
+                    <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-gray-800">Despesas</h2><button onclick="openModal('expense-modal')" class="bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-1"></i> Adicionar</button></div>
+                    <div id="expenses-list" class="space-y-4 bg-white p-4 rounded-xl shadow-md"></div>
+                </section>
             </aside>
         </div>
     </main>
     
     <!-- Modals -->
-    <div id="flight-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Voo</h3><form id="flight-form" class="space-y-4"><div><label class="block text-sm font-semibold">Companhia Aérea</label><input type="text" id="flight-company" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Código do Voo</label><input type="text" id="flight-code" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Partida</label><input type="datetime-local" id="flight-departure" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Chegada</label><input type="datetime-local" id="flight-arrival" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Voo</button><button type="button" onclick="closeModal('flight-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
-    </div>
-    <div id="hotel-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Hotel</h3><form id="hotel-form" class="space-y-4"><div><label class="block text-sm font-semibold">Nome do Hotel</label><input type="text" id="hotel-name" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-in</label><input type="date" id="hotel-checkin" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-out</label><input type="date" id="hotel-checkout" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Hotel</button><button type="button" onclick="closeModal('hotel-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
-    </div>
-    <div id="activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Atividade</h3><form id="activity-form" class="space-y-4"><div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="activity-description" placeholder="Ex: Visita ao Museu do Louvre" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Data</label><input type="date" id="activity-date" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Atividade</button><button type="button" onclick="closeModal('activity-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div>
-    </div>
+    <div id="flight-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50"><div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Voo</h3><form id="flight-form" class="space-y-4"><div><label class="block text-sm font-semibold">Companhia Aérea</label><input type="text" id="flight-company" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Código do Voo</label><input type="text" id="flight-code" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Partida</label><input type="datetime-local" id="flight-departure" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Chegada</label><input type="datetime-local" id="flight-arrival" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Voo</button><button type="button" onclick="closeModal('flight-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div></div>
+    <div id="hotel-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50"><div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Hotel</h3><form id="hotel-form" class="space-y-4"><div><label class="block text-sm font-semibold">Nome do Hotel</label><input type="text" id="hotel-name" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-in</label><input type="date" id="hotel-checkin" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Check-out</label><input type="date" id="hotel-checkout" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Hotel</button><button type="button" onclick="closeModal('hotel-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div></div>
+    <div id="activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50"><div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Atividade</h3><form id="activity-form" class="space-y-4"><div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="activity-description" placeholder="Ex: Visita ao Museu do Louvre" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Data</label><input type="date" id="activity-date" class="w-full p-2 border rounded" required></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Atividade</button><button type="button" onclick="closeModal('activity-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div></div>
+    <div id="expense-modal" class="modal fixed inset-0 bg-black bg-opacity-50 items-center justify-center p-4 z-50"><div class="bg-white rounded-lg p-8 w-full max-w-md"><h3 class="text-xl font-bold mb-4">Adicionar Despesa</h3><form id="expense-form" class="space-y-4"><div><label class="block text-sm font-semibold">Descrição</label><input type="text" id="expense-description" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Valor</label><input type="number" id="expense-amount" step="0.01" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Moeda</label><input type="text" id="expense-currency" value="BRL" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Data</label><input type="date" id="expense-date" class="w-full p-2 border rounded" required></div><div><label class="block text-sm font-semibold">Categoria</label><select id="expense-category" class="w-full p-2 border rounded"><option>Alimentação</option><option>Transporte</option><option>Hospedagem</option><option>Lazer</option><option>Outros</option></select></div><button type="submit" class="bg-blue-600 text-white w-full py-2 rounded-lg">Salvar Despesa</button><button type="button" onclick="closeModal('expense-modal')" class="bg-gray-200 text-gray-800 w-full py-2 rounded-lg mt-2">Cancelar</button></form></div></div>
 
     <script>
         function openModal(modalId) { document.getElementById(modalId).classList.add('is-open'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('is-open'); }
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
             const urlParams = new URLSearchParams(window.location.search);
             const tripId = parseInt(urlParams.get('id'));
-            let currentBudget = 0;
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
-            if (!tripId) { document.querySelector('main').innerHTML = '<p class="text-red-500 text-center">ID da viagem não encontrado.</p>'; return; }
+            if (!loggedInUser || !tripId) {
+                window.location.href = 'login.html';
+                return;
+            }
 
-            // --- Funções de Renderização com Checkbox ---
+            const formatCurrency = (value) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
+
             const createItemHTML = (item, type, content) => `
-                <div class="bg-white p-4 rounded-lg shadow-sm flex items-center">
-                    <input type="checkbox" class="item-checkbox h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" 
-                           data-type="${type}" data-id="${item.id}" ${item.is_done ? 'checked' : ''}>
-                    <div class="ml-3 text-sm flex-grow ${item.is_done ? 'item-done' : ''}" id="text-${type}-${item.id}">
-                        ${content}
+                <div class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="item-checkbox h-5 w-5 rounded border-gray-300 text-blue-600" data-type="${type}" data-id="${item.id}" ${item.is_done ? 'checked' : ''}>
+                        <div class="ml-3 text-sm flex-grow ${item.is_done ? 'item-done' : ''}" id="text-${type}-${item.id}">${content}</div>
                     </div>
                 </div>`;
             
-            const flightHTML = f => createItemHTML(f, 'flight', `<strong>${f.company} ${f.code}</strong><p class="text-xs">Partida: ${new Date(f.departure).toLocaleString()}</p>`);
-            const hotelHTML = h => createItemHTML(h, 'hotel', `<strong>${h.name}</strong><p class="text-xs">Check-in: ${new Date(h.checkin).toLocaleDateString()}</p>`);
-            const activityHTML = a => createItemHTML(a, 'activity', `<strong>${a.description}</strong><p class="text-xs">Data: ${new Date(a.date).toLocaleDateString()}</p>`);
+            const createExpenseHTML = (expense) => `
+                <div class="flex items-center justify-between py-2 border-b last:border-b-0">
+                    <div>
+                        <strong class="block">${expense.description}</strong>
+                        <p class="text-xs text-gray-500">${expense.category} - ${new Date(expense.date).toLocaleDateString()}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <p class="font-semibold text-red-500">${formatCurrency(expense.amount)}</p>
+                        <button class="delete-expense-btn text-gray-400 hover:text-red-600" data-id="${expense.id}"><i data-feather="x-circle" class="w-4 h-4"></i></button>
+                    </div>
+                </div>`;
 
-            const renderItem = (listId, items, renderFunc, emptyMsg) => {
-                const list = document.getElementById(listId);
-                list.innerHTML = items.length ? '' : `<p class="text-gray-500">${emptyMsg}</p>`;
-                items.forEach(item => list.innerHTML += renderFunc(item));
-            };
-            
-            const renderSuggestions = (suggestions) => {
-                const list = document.getElementById('suggestions-list');
-                list.innerHTML = '';
-                suggestions.forEach(s => { list.innerHTML += `<div class="bg-blue-50 p-3 rounded-lg"><p class="font-semibold">${s.name}</p><span class="text-xs text-blue-700">${s.type}</span></div>`; });
-            };
-
-            const updateBudgetDisplay = (totalSpent) => {
-                const totalBudgetEl = document.getElementById('total-budget');
-                const totalExpensesEl = document.getElementById('total-expenses');
-                const remainingBudgetEl = document.getElementById('remaining-budget');
-                
-                const remaining = currentBudget - totalSpent;
-
-                totalBudgetEl.textContent = `R$ ${currentBudget.toFixed(2)}`;
-                totalExpensesEl.textContent = `R$ ${totalSpent.toFixed(2)}`;
-                remainingBudgetEl.textContent = `R$ ${remaining.toFixed(2)}`;
-                
-                remainingBudgetEl.classList.remove('text-green-600', 'text-red-600');
-                remainingBudgetEl.classList.add(remaining >= 0 ? 'text-green-600' : 'text-red-600');
-            };
-
-            const renderExpenses = (expenses) => {
-                const list = document.getElementById('expenses-list');
-                let totalSpent = 0;
-                list.innerHTML = expenses.length ? '' : '<p class="text-gray-500">Nenhuma despesa registada.</p>';
-                
-                expenses.forEach(e => {
-                    totalSpent += parseFloat(e.amount);
-                    list.innerHTML += `
-                        <div class="flex justify-between items-center bg-gray-50 p-2 rounded" id="expense-${e.id}">
-                            <div><p class="font-semibold">${e.description}</p><p class="text-xs text-gray-500">${e.category} - ${new Date(e.date).toLocaleDateString()}</p></div>
-                            <div class="flex items-center"><p class="font-bold text-red-500 mr-4">${e.currency} ${parseFloat(e.amount).toFixed(2)}</p><button class="remove-expense-btn text-gray-400 hover:text-red-600" data-expense-id="${e.id}"><i data-feather="trash-2" class="w-4 h-4"></i></button></div>
-                        </div>`;
-                });
-                updateBudgetDisplay(totalSpent);
+            const renderList = (listId, items, renderFunc, emptyMsg) => {
+                const listEl = document.getElementById(listId);
+                listEl.innerHTML = '';
+                if (Array.isArray(items) && items.length > 0) {
+                    items.forEach(item => {
+                        const div = document.createElement('div');
+                        div.innerHTML = renderFunc(item);
+                        while (div.firstChild) {
+                           listEl.appendChild(div.firstChild);
+                        }
+                    });
+                } else {
+                    listEl.innerHTML = `<p class="text-gray-500 text-sm p-4 text-center">${emptyMsg}</p>`;
+                }
                 feather.replace();
             };
-
-            // --- Lógica de Eventos ---
-            const handleCheckboxChange = async (e) => {
-                const checkbox = e.target;
-                const type = checkbox.dataset.type;
-                const id = checkbox.dataset.id;
-                const is_done = checkbox.checked;
-
-                document.getElementById(`text-${type}-${id}`).classList.toggle('item-done', is_done);
-                
-                // CORREÇÃO: Lida com o plural irregular de "activity"
-                const endpointType = type === 'activity' ? 'activities' : `${type}s`;
-
-                try {
-                    await fetch(`http://127.0.0.1:5000/api/${endpointType}/${id}/status`, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ is_done })
-                    });
-                } catch (error) {
-                    console.error('Falha ao atualizar status:', error);
-                    checkbox.checked = !is_done;
-                    document.getElementById(`text-${type}-${id}`).classList.toggle('item-done', !is_done);
-                }
-            };
-
-            // --- Carregamento de Dados (MAIS ROBUSTO) ---
+            
             async function loadTripData() {
                 try {
-                    const tripRes = await fetch(`http://127.0.0.1:5000/api/trips/${tripId}`);
-                    if (!tripRes.ok) throw new Error('Viagem não encontrada. Não foi possível carregar os dados.');
-                    const { trip } = await tripRes.json();
-                    currentBudget = parseFloat(trip.budget) || 0;
-                    document.getElementById('trip-budget-input').value = currentBudget.toFixed(2);
-                    document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
-
-                    const [detailsRes, expensesRes] = await Promise.all([
+                    const [tripRes, detailsRes, expensesRes] = await Promise.all([
+                        fetch(`http://127.0.0.1:5000/api/trips/${tripId}`),
                         fetch(`http://127.0.0.1:5000/api/trips/${tripId}/details`),
                         fetch(`http://127.0.0.1:5000/api/trips/${tripId}/expenses`)
                     ]);
-
-                    if (detailsRes.ok) {
-                        const details = await detailsRes.json();
-                        renderItem('flights-list', details.flights, flightHTML, 'Nenhum voo adicionado.');
-                        renderItem('hotels-list', details.hotels, hotelHTML, 'Nenhum hotel adicionado.');
-                        renderItem('activities-list', details.activities, activityHTML, 'Nenhuma atividade adicionada.');
-                        renderSuggestions(details.suggestions);
-                    }
-
-                    if (expensesRes.ok) {
-                        const { expenses } = await expensesRes.json();
-                        renderExpenses(expenses);
-                    } else {
-                        renderExpenses([]);
-                    }
                     
-                    feather.replace();
+                    if (!tripRes.ok) throw new Error('Viagem não encontrada.');
+                    
+                    const { trip } = await tripRes.json();
+                    const details = await detailsRes.json();
+                    const { expenses } = await expensesRes.json();
+
+                    document.getElementById('trip-header').innerHTML = `<h1 class="text-3xl font-bold">${trip.name}</h1><p class="text-lg text-gray-600">${trip.destination}</p>`;
+                    document.getElementById('share-code-display').textContent = trip.share_code || 'N/A';
+                    
+                    const flightHTML = f => `<strong>${f.company} ${f.code}</strong><p class="text-xs text-gray-500">Partida: ${new Date(f.departure).toLocaleString()}</p>`;
+                    const hotelHTML = h => `<strong>${h.name}</strong><p class="text-xs text-gray-500">Check-in: ${new Date(h.checkin).toLocaleDateString()}</p>`;
+                    const activityHTML = a => `<strong>${a.description}</strong><p class="text-xs text-gray-500">Data: ${new Date(a.date).toLocaleDateString()}</p>`;
+
+                    renderList('flights-list', details.flights, (f) => createItemHTML(f, 'flight', flightHTML(f)), 'Nenhum voo adicionado.');
+                    renderList('hotels-list', details.hotels, (h) => createItemHTML(h, 'hotel', hotelHTML(h)), 'Nenhum hotel adicionado.');
+                    renderList('activities-list', details.activities, (a) => createItemHTML(a, 'activity', activityHTML(a)), 'Nenhuma atividade adicionada.');
+                    renderList('expenses-list', expenses, createExpenseHTML, 'Nenhuma despesa adicionada.');
+                    
+                    const totalSpent = (expenses || []).reduce((sum, e) => sum + (e.amount || 0), 0);
+                    const budget = trip.budget || 0;
+
+                    document.getElementById('budget-input').value = budget.toFixed(2);
+                    document.getElementById('budget-total').textContent = formatCurrency(budget);
+                    document.getElementById('budget-spent').textContent = formatCurrency(totalSpent);
+                    document.getElementById('budget-remaining').textContent = formatCurrency(budget - totalSpent);
+                    
                     document.querySelectorAll('.item-checkbox').forEach(cb => cb.addEventListener('change', handleCheckboxChange));
-                } catch (error) { document.getElementById('trip-header').innerHTML = `<p class="text-red-500">${error.message}</p>`; }
+                    document.querySelectorAll('.delete-expense-btn').forEach(btn => btn.addEventListener('click', handleDeleteExpense));
+
+                } catch (error) {
+                    document.getElementById('trip-header').innerHTML = `<p class="text-red-500 font-semibold text-center">${error.message}</p>`;
+                }
             }
             
-            // --- Submissão de Formulários (UNIFICADO) ---
-            const handleFormSubmit = (formId, url, getBody) => {
-                const form = document.getElementById(formId);
-                if (!form) return;
-
-                form.addEventListener('submit', async (e) => {
+            const handleFormSubmit = async (formId, url, getBody, modalId) => {
+                document.getElementById(formId).addEventListener('submit', async (e) => {
                     e.preventDefault();
                     try {
                         const response = await fetch(url, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(getBody())
+                            method: 'POST', 
+                            headers: { 'Content-Type': 'application/json' }, 
+                            body: JSON.stringify({ ...getBody(), user_id: loggedInUser.id })
                         });
                         if (!response.ok) {
-                            const errorResult = await response.json();
-                            throw new Error(errorResult.message || 'Falha ao adicionar item.');
+                            const err = await response.json();
+                            throw new Error(err.message || `Falha ao salvar.`);
                         }
-                        
-                        loadTripData(); 
-                        form.reset();
-                        
-                        const modal = form.closest('.modal');
-                        if (modal) {
-                            closeModal(modal.id);
-                        }
-
-                    } catch (error) {
-                        alert(`Erro: ${error.message}`);
-                    }
+                        closeModal(modalId);
+                        loadTripData();
+                    } catch (error) { alert(`Erro: ${error.message}`); }
+                });
+            };
+            
+            const handleCheckboxChange = async (e) => {
+                const { type, id } = e.target.dataset;
+                const is_done = e.target.checked;
+                document.getElementById(`text-${type}-${id}`).classList.toggle('item-done', is_done);
+                const endpointType = type === 'activity' ? 'activities' : `${type}s`;
+                await fetch(`http://127.0.0.1:5000/api/${endpointType}/${id}/status`, {
+                    method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ is_done })
                 });
             };
 
-            handleFormSubmit('flight-form', `http://127.0.0.1:5000/api/trips/${tripId}/flights`, () => ({
-                company: document.getElementById('flight-company').value, code: document.getElementById('flight-code').value,
-                departure: document.getElementById('flight-departure').value, arrival: document.getElementById('flight-arrival').value,
-            }));
-            handleFormSubmit('hotel-form', `http://127.0.0.1:5000/api/trips/${tripId}/hotels`, () => ({
-                name: document.getElementById('hotel-name').value, checkin: document.getElementById('hotel-checkin').value,
-                checkout: document.getElementById('hotel-checkout').value,
-            }));
-            handleFormSubmit('activity-form', `http://127.0.0.1:5000/api/trips/${tripId}/activities`, () => ({
-                description: document.getElementById('activity-description').value, date: document.getElementById('activity-date').value,
-            }));
-            handleFormSubmit('expense-form', `http://127.0.0.1:5000/api/trips/${tripId}/expenses`, () => ({
-                description: document.getElementById('expense-description').value,
-                amount: parseFloat(document.getElementById('expense-amount').value),
-                currency: document.getElementById('expense-currency').value,
-                category: document.getElementById('expense-category').value,
-                date: new Date().toISOString().split('T')[0]
-            }));
+            const handleDeleteExpense = async (e) => {
+                const btn = e.target.closest('.delete-expense-btn');
+                const { id } = btn.dataset;
+                await fetch(`http://127.0.0.1:5000/api/expenses/${id}`, { method: 'DELETE' });
+                loadTripData();
+            };
 
+            document.getElementById('copy-code-btn').addEventListener('click', () => {
+                const code = document.getElementById('share-code-display').textContent;
+                navigator.clipboard.writeText(code).then(() => { alert('Código copiado!'); });
+            });
+            
             document.getElementById('set-budget-btn').addEventListener('click', async () => {
-                const newBudget = parseFloat(document.getElementById('trip-budget-input').value);
-                try {
-                    const response = await fetch(`http://127.0.0.1:5000/api/trips/${tripId}/budget`, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ budget: newBudget })
-                    });
-                    if (!response.ok) throw new Error('Falha ao definir orçamento.');
-                    currentBudget = newBudget;
-                    loadTripData();
-                } catch (error) {
-                    alert(`Erro: ${error.message}`);
-                }
+                const newBudget = parseFloat(document.getElementById('budget-input').value);
+                await fetch(`http://127.0.0.1:5000/api/trips/${tripId}/budget`, {
+                    method: 'PATCH', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ budget: newBudget, user_id: loggedInUser.id })
+                });
+                loadTripData();
             });
-
-            document.getElementById('expenses-list').addEventListener('click', async (e) => {
-                const removeButton = e.target.closest('.remove-expense-btn');
-                if (removeButton) {
-                    const expenseId = removeButton.dataset.expenseId;
-                    try {
-                        const response = await fetch(`http://127.0.0.1:5000/api/expenses/${expenseId}`, { method: 'DELETE' });
-                        if (!response.ok) throw new Error('Falha ao remover despesa.');
-                        loadTripData();
-                    } catch (error) {
-                        alert(`Erro: ${error.message}`);
-                    }
-                }
-            });
+            
+            handleFormSubmit('flight-form', `http://127.0.0.1:5000/api/trips/${tripId}/flights`, () => ({ company: document.getElementById('flight-company').value, code: document.getElementById('flight-code').value, departure: document.getElementById('flight-departure').value, arrival: document.getElementById('flight-arrival').value }), 'flight-modal');
+            handleFormSubmit('hotel-form', `http://127.0.0.1:5000/api/trips/${tripId}/hotels`, () => ({ name: document.getElementById('hotel-name').value, checkin: document.getElementById('hotel-checkin').value, checkout: document.getElementById('hotel-checkout').value }), 'hotel-modal');
+            handleFormSubmit('activity-form', `http://127.0.0.1:5000/api/trips/${tripId}/activities`, () => ({ description: document.getElementById('activity-description').value, date: document.getElementById('activity-date').value }), 'activity-modal');
+            handleFormSubmit('expense-form', `http://127.0.0.1:5000/api/trips/${tripId}/expenses`, () => ({ description: document.getElementById('expense-description').value, amount: parseFloat(document.getElementById('expense-amount').value), currency: document.getElementById('expense-currency').value, date: document.getElementById('expense-date').value, category: document.getElementById('expense-category').value }), 'expense-modal');
 
             loadTripData();
         });

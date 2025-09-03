@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Painel - Travel Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
 <body class="bg-gray-100">
 
@@ -24,62 +23,68 @@
     </header>
 
     <main class="container mx-auto p-6">
-        <section id="create-trip-section" class="mb-12">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6">Planeje sua Próxima Aventura</h1>
-            <div class="bg-white p-8 rounded-xl shadow-md">
-                <form id="create-trip-form">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div><label for="destination" class="block text-sm font-semibold text-gray-700 mb-2">Destino</label><input type="text" id="destination" placeholder="Ex: Paris, França" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
-                        <div><label for="trip-name" class="block text-sm font-semibold text-gray-700 mb-2">Nome da Viagem</label><input type="text" id="trip-name" placeholder="Ex: Férias na Europa" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
-                        <div><label for="start-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Início</p><input type="date" id="start-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
-                        <div><label for="end-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Fim</p><input type="date" id="end-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></div>
-                    </div>
-                    <div class="mt-6 text-right"><button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">Criar Roteiro</button></div>
-                </form>
-            </div>
-        </section>
+        <div class="grid lg:grid-cols-2 gap-12 mb-12">
+            <!-- Criar Roteiro -->
+            <section id="create-trip-section">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Planeje sua Próxima Aventura</h1>
+                <div class="bg-white p-8 rounded-xl shadow-md">
+                    <form id="create-trip-form">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div><label for="destination" class="block text-sm font-semibold text-gray-700 mb-2">Destino</label><input type="text" id="destination" placeholder="Ex: Paris, França" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                            <div><label for="trip-name" class="block text-sm font-semibold text-gray-700 mb-2">Nome da Viagem</label><input type="text" id="trip-name" placeholder="Ex: Férias na Europa" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                            <div><label for="start-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Início</label><input type="date" id="start-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                            <div><label for="end-date" class="block text-sm font-semibold text-gray-700 mb-2">Data de Fim</label><input type="date" id="end-date" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required></div>
+                            <div class="md:col-span-2">
+                                <label for="share-code-create" class="block text-sm font-semibold text-gray-700 mb-2">Digite um código para indicação 😀</label>
+                                <input type="text" id="share-code-create" placeholder="Opcional (ex: ferias-em-familia)" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            </div>
+                        </div>
+                        <div class="mt-6 text-right"><button type="submit" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">Criar Roteiro</button></div>
+                    </form>
+                </div>
+            </section>
+            <!-- Juntar-se a um Roteiro -->
+            <section id="join-trip-section">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">Colabore com Amigos</h1>
+                 <div class="bg-white p-8 rounded-xl shadow-md">
+                    <form id="join-trip-form">
+                        <label for="share-code" class="block text-sm font-semibold text-gray-700 mb-2">Tem um código ? Digite aqui 😀</label>
+                        <div class="flex items-center gap-4">
+                           <input type="text" id="share-code" placeholder="Insira o código aqui" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                           <button type="submit" class="bg-green-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 whitespace-nowrap">Juntar-se</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
 
-        <!-- Seção PRIVADA do Usuário -->
         <section id="my-trips-section" class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Meus Roteiros</h2>
-            <div id="my-trips-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p class="text-gray-500 col-span-full">Carregando seus roteiros...</p>
-            </div>
+            <div id="my-trips-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </section>
 
-        <!-- Seção PÚBLICA de Sugestões -->
         <section id="suggestions-section">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Sugestões de Roteiros</h2>
-            <div id="suggestions-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p class="text-gray-500 col-span-full">Carregando sugestões...</p>
-            </div>
+            <div id="suggestions-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </section>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             feather.replace();
-
-            const createTripForm = document.getElementById('create-trip-form');
-            const myTripsList = document.getElementById('my-trips-list');
-            const suggestionsList = document.getElementById('suggestions-list');
-            const userWelcome = document.getElementById('user-welcome');
-            const logoutLink = document.getElementById('logout-link');
-            
             const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
             if (!loggedInUser) {
-                alert('Você precisa fazer login para acessar esta página.');
                 window.location.href = 'login.html';
                 return;
             }
 
-            userWelcome.textContent = `Bem-vindo, ${loggedInUser.name}!`;
+            document.getElementById('user-welcome').textContent = `Bem-vindo, ${loggedInUser.name}!`;
 
             function createTripCard(trip) {
                 const card = document.createElement('a');
                 card.href = `trip-details.html?id=${trip.id}`;
-                card.className = 'block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300';
+                card.className = 'block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow';
                 const imageUrl = `https://placehold.co/600x400/a0c4ff/333333?text=${encodeURIComponent(trip.destination)}`;
                 card.innerHTML = `
                     <img class="w-full h-40 object-cover" src="${imageUrl}" alt="Imagem de ${trip.destination}">
@@ -93,65 +98,100 @@
                     </div>`;
                 return card;
             }
-            
-            async function loadTrips(url, listElement, emptyMessage) {
+
+            async function loadUserTrips() {
+                const listElement = document.getElementById('my-trips-list');
                 try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error('Falha ao buscar dados.');
+                    const response = await fetch(`http://127.0.0.1:5000/api/my-trips?user_id=${loggedInUser.id}`);
                     const data = await response.json();
-                    
                     listElement.innerHTML = '';
                     if (data.trips && data.trips.length > 0) {
-                        data.trips.forEach(trip => {
-                            listElement.appendChild(createTripCard(trip));
-                        });
+                        data.trips.forEach(trip => listElement.appendChild(createTripCard(trip)));
                     } else {
-                        listElement.innerHTML = `<p class="text-gray-500 col-span-full">${emptyMessage}</p>`;
+                        listElement.innerHTML = `<p class="text-gray-500 col-span-full">Você ainda não tem nenhum roteiro. Crie um acima!</p>`;
                     }
                     feather.replace();
                 } catch (error) {
-                    console.error("Erro ao carregar roteiros:", error);
                     listElement.innerHTML = `<p class="text-red-500 col-span-full">Não foi possível carregar os roteiros.</p>`;
                 }
             }
+            
+            async function loadSuggestions() {
+                const listElement = document.getElementById('suggestions-list');
+                 try {
+                    const response = await fetch(`http://127.0.0.1:5000/api/suggestions`);
+                    const data = await response.json();
+                    listElement.innerHTML = '';
+                    if (data.trips && data.trips.length > 0) {
+                        data.trips.forEach(trip => listElement.appendChild(createTripCard(trip)));
+                    } else {
+                        listElement.innerHTML = `<p class="text-gray-500 col-span-full">Nenhuma sugestão disponível.</p>`;
+                    }
+                    feather.replace();
+                } catch (error) {
+                    listElement.innerHTML = `<p class="text-red-500 col-span-full">Não foi possível carregar as sugestões.</p>`;
+                }
+            }
 
-            createTripForm.addEventListener('submit', async (event) => {
+            document.getElementById('create-trip-form').addEventListener('submit', async (event) => {
                 event.preventDefault();
                 const tripData = {
                     destination: document.getElementById('destination').value,
                     name: document.getElementById('trip-name').value,
                     start_date: document.getElementById('start-date').value,
                     end_date: document.getElementById('end-date').value,
-                    user_id: loggedInUser.id
+                    user_id: loggedInUser.id,
+                    share_code: document.getElementById('share-code-create').value
                 };
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/api/trips', {
+                    const response = await fetch('http://127.0.0.1:5000/api/trips', { 
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(tripData)
                     });
-                    if (!response.ok) throw new Error('Falha ao criar viagem.');
-                    const newTrip = await response.json();
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.message);
                     
-                    const noTripsMsg = document.querySelector('#my-trips-list > p');
-                    if(noTripsMsg) noTripsMsg.remove();
+                    loadUserTrips();
+                    event.target.reset();
+                } catch (error) {
+                    alert(`Erro: ${error.message}`);
+                }
+            });
+
+            document.getElementById('join-trip-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const shareCode = document.getElementById('share-code').value;
+                if (!shareCode) {
+                    alert('Por favor, insira um código de partilha.');
+                    return;
+                }
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/api/trips/join', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ share_code: shareCode, user_id: loggedInUser.id })
+                    });
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.message);
                     
-                    myTripsList.appendChild(createTripCard(newTrip.trip));
-                    feather.replace();
-                    createTripForm.reset();
+                    alert(`Você juntou-se ao roteiro "${result.trip.name}"!`);
+                    loadUserTrips();
+                    event.target.reset();
+
                 } catch (error) {
                     alert(`Erro: ${error.message}`);
                 }
             });
             
-            logoutLink.addEventListener('click', (event) => {
-                event.preventDefault();
+            document.getElementById('logout-link').addEventListener('click', (e) => {
+                e.preventDefault();
                 localStorage.removeItem('loggedInUser');
                 window.location.href = 'login.html';
             });
             
-            loadTrips(`http://127.0.0.1:5000/api/my-trips?user_id=${loggedInUser.id}`, myTripsList, 'Você ainda não tem nenhum roteiro. Crie um acima!');
-            loadTrips('http://127.0.0.1:5000/api/suggestions', suggestionsList, 'Nenhuma sugestão disponível no momento.');
+            loadUserTrips();
+            loadSuggestions();
         });
     </script>
 </body>
