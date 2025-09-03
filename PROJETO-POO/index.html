@@ -8,21 +8,17 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!--Fonts: Inter-->
+    <!--Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!--  Icons  -->
     <script src="https://unpkg.com/feather-icons"></script>
-    <link rel="icon" href="icon.png" type="image/png">
 
     <style>
-        /* a little bit css */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Simple fade-in animation */
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
@@ -32,6 +28,11 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        span{
+            color:rgb(235, 190, 31)
+        }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -53,8 +54,8 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section class="relative h-screen flex items-center justify-center text-white">
+            
             <!-- Background Image -->
             <div class="absolute inset-0 bg-black/50 z-10"></div>
             <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070" 
@@ -95,7 +96,7 @@
                     <!-- Feature 3: Bookings -->
                     <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
                         <i data-feather="briefcase" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Reservas Integradas</h3>
+                        <h3 class="text-xl font-semibold mb-2">Reservas Integradas - <span> EM BREVE</span></h3>
                         <p class="text-gray-600">Encontre as melhores ofertas e reserve voos, hotéis e passeios diretamente na plataforma.</p>
                     </div>
                     <!-- Feature 4: Budget -->
@@ -107,13 +108,13 @@
                     <!-- Feature 5: Guides -->
                     <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
                         <i data-feather="book-open" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Guias e Recomendações</h3>
+                        <h3 class="text-xl font-semibold mb-2">Guias e Recomendações - <span>EM BREVE</span></h3>
                         <p class="text-gray-600">Acesse guias de viagem completos e receba sugestões personalizadas com base em seus interesses.</p>
                     </div>
                     <!-- Feature 6: Offline Access -->
-                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 fade-in-section">
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-800 fade-in-section">
                         <i data-feather="wifi-off" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Acesso Offline</h3>
+                        <h3 class="text-xl font-semibold mb-2">Acesso Offline - <span>EM BREVE</span> </h3>
                         <p class="text-gray-600">Leve seu roteiro com você. Acesse mapas, reservas e informações importantes mesmo sem internet.</p>
                     </div>
                 </div>
@@ -134,18 +135,18 @@
                             <p class="text-gray-200">Itália</p>
                         </div>
                     </div>
-                    <!-- Destination Card 2 -->
+                    <!-- Destination  2 -->
                     <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
-                        <img src="https://images.unsplash.com/photo-1540959733332-eab4de25247d?q=80&w=2070" alt="Tóquio, Japão" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="https://plus.unsplash.com/premium_photo-1661964177687-57387c2cbd14?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tóquio, Japão" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-6 text-white">
                             <h3 class="text-2xl font-bold">Tóquio</h3>
                             <p class="text-gray-200">Japão</p>
                         </div>
                     </div>
-                    <!-- Destination Card 3 -->
+                    <!-- Destination 3 -->
                     <div class="relative rounded-xl overflow-hidden shadow-lg group fade-in-section">
-                        <img src="https://images.unsplash.com/photo-1505832018823-50331d703235?q=80&w=2070" alt="Bali, Indonésia" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1532186651327-6ac23687d189?q=80&w=749&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bali, Indonésia" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                         <div class="absolute bottom-0 left-0 p-6 text-white">
                             <h3 class="text-2xl font-bold">Bali</h3>
@@ -165,7 +166,6 @@
             </div>
         </section>
 
-        <!-- About/CTA Section -->
         <section id="about" class="py-20 bg-blue-600 text-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl font-bold mb-4">Pronto para a Aventura da Sua Vida?</h2>
@@ -180,19 +180,16 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 py-12">
         <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2025 TravelPlanner. Todos os direitos reservados.</p>
-            <p class="text-sm text-gray-500 mt-2">Um projeto de software - 2025</p>
+            <p>&copy; 2025 TravelPlanner. Edgar Vitor.</p>
+            <p class="text-sm text-gray-500 mt-2"> Projeto de Software UFAL - 2025.01 </p>
         </div>
     </footer>
 
     <script>
-        // Initialize Feather Icons
         feather.replace();
 
-        // Simple Intersection Observer for fade-in animations
         const sections = document.querySelectorAll('.fade-in-section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -211,5 +208,4 @@
 
 </body>
 </html>
-
 

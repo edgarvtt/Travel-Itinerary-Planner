@@ -1,18 +1,61 @@
-# app.py
+# --- Importações ---
 import json
 import os
 import random
 import string
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify #converter dict python para database.json
+from flask_cors import CORS #FUNCIONAMENTO DA API
 
-# --- Classes de Modelo (POO) ---
+#Classes 
+
+class ItineraryItem:
+    def __init__(self, id, trip_id, is_done=False):
+        self.id = id
+        self.trip_id = trip_id
+        self.is_done = is_done
+
+    def to_dict(self):
+        return self.__dict__
+
+#  classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem.
+class Flight(ItineraryItem):
+    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.company = company
+        self.code = code
+        self.departure = departure
+        self.arrival = arrival
+
+class Hotel(ItineraryItem):
+    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.name = name
+        self.checkin = checkin
+        self.checkout = checkout
+
+class Activity(ItineraryItem):
+    def __init__(self, id, trip_id, description, date, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.description = description
+        self.date = date
+        
+class Expense(ItineraryItem):
+    def __init__(self, id, trip_id, description, amount, currency, date, category, is_done=False):
+        # A despesa também herda, mas o 'is_done' não é tão relevante aqui,
+        super().__init__(id, trip_id, is_done)
+        self.description = description
+        self.amount = amount
+        self.currency = currency
+        self.date = date
+        self.category = category
+
+
 class User:
     def __init__(self, id, name, email, password):
         self.id = id
         self.name = name
         self.email = email
-        self.password = password
+        self.password = password #seria diferente ao migrar para um banco de dados
 
     def to_dict(self):
         return {"id": self.id, "name": self.name, "email": self.email}
@@ -29,31 +72,12 @@ class Trip:
         self.budget = budget
         self.share_code = share_code
         self.collaborators = collaborators if collaborators is not None else []
-    
+
     def to_dict(self):
         return self.__dict__
 
-class Flight:
-    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):
-        self.id, self.trip_id, self.company, self.code, self.departure, self.arrival, self.is_done = id, trip_id, company, code, departure, arrival, is_done
-    def to_dict(self): return self.__dict__
 
-class Hotel:
-    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):
-        self.id, self.trip_id, self.name, self.checkin, self.checkout, self.is_done = id, trip_id, name, checkin, checkout, is_done
-    def to_dict(self): return self.__dict__
-
-class Activity:
-    def __init__(self, id, trip_id, description, date, is_done=False):
-        self.id, self.trip_id, self.description, self.date, self.is_done = id, trip_id, description, date, is_done
-    def to_dict(self): return self.__dict__
-
-class Expense:
-    def __init__(self, id, trip_id, description, amount, currency, date, category):
-        self.id, self.trip_id, self.description, self.amount, self.currency, self.date, self.category = id, trip_id, description, amount, currency, date, category
-    def to_dict(self): return self.__dict__
-
-# --- Classe de Armazenamento ---
+# Classe de Armazenamento com json
 class DataStore:
     def __init__(self, filename='database.json'):
         self._filename = filename
@@ -99,14 +123,12 @@ class DataStore:
         return User(**user_data) if user_data else None
 
     def add_trip(self, user_id, dest, name, start, end, share_code):
-        # Se o utilizador forneceu um código, verifica se é único
         if share_code and self.find_trip_by_share_code(share_code):
-            return None # Código já em uso
+            return None 
 
-        # Se o utilizador não forneceu um código, gera um aleatório
         if not share_code:
             share_code = self._generate_share_code()
-            while self.find_trip_by_share_code(share_code): # Garante que o código gerado é único
+            while self.find_trip_by_share_code(share_code):
                 share_code = self._generate_share_code()
 
         trip = Trip(self._get_next_id('trips'), user_id, dest, name, start, end, share_code=share_code, collaborators=[])
@@ -114,10 +136,6 @@ class DataStore:
         self._save_data()
         return trip
 
-    def find_trip_by_id(self, trip_id):
-        trip_data = next((t for t in self._data['trips'] if t.get('id') == trip_id), None)
-        return Trip(**trip_data) if trip_data else None
-    
     def find_trip_by_share_code(self, code):
         trip_data = next((t for t in self._data['trips'] if t.get('share_code') == code), None)
         return Trip(**trip_data) if trip_data else None
@@ -142,9 +160,11 @@ class DataStore:
                 user_trips.append(Trip(**t_data))
         return user_trips
 
+    def find_trip_by_id(self, trip_id):
+        trip_data = next((t for t in self._data['trips'] if t.get('id') == trip_id), None)
+        return Trip(**trip_data) if trip_data else None
     def get_suggestion_trips(self):
         return [Trip(**t_data) for t_data in self._data.get('trips', []) if t_data.get('is_suggestion', False)]
-    
     def update_trip_budget(self, trip_id, budget):
         for trip in self._data['trips']:
             if trip.get('id') == trip_id:
@@ -152,7 +172,6 @@ class DataStore:
                 self._save_data()
                 return Trip(**trip)
         return None
-
     def _update_item_status(self, collection_name, item_id, is_done):
         for item in self._data.get(collection_name, []):
             if item.get('id') == item_id:
@@ -161,33 +180,20 @@ class DataStore:
                 return item
         return None
 
-    def add_flight(self, trip_id, **kwargs):
-        flight = Flight(self._get_next_id('flights'), trip_id, **kwargs)
-        self._data['flights'].append(flight.to_dict())
+    def _add_item(self, collection_name, item_class, trip_id, **kwargs):
+        # Este método agora pode adicionar qualquer 'ItineraryItem'
+        item = item_class(self._get_next_id(collection_name), trip_id, **kwargs)
+        self._data[collection_name].append(item.to_dict())
         self._save_data()
-        return flight
-
-    def add_hotel(self, trip_id, **kwargs):
-        hotel = Hotel(self._get_next_id('hotels'), trip_id, **kwargs)
-        self._data['hotels'].append(hotel.to_dict())
-        self._save_data()
-        return hotel
-
-    def add_activity(self, trip_id, **kwargs):
-        activity = Activity(self._get_next_id('activities'), trip_id, **kwargs)
-        self._data['activities'].append(activity.to_dict())
-        self._save_data()
-        return activity
+        return item
     
-    def add_expense(self, trip_id, **kwargs):
-        expense = Expense(self._get_next_id('expenses'), trip_id, **kwargs)
-        self._data['expenses'].append(expense.to_dict())
-        self._save_data()
-        return expense
-        
+    def add_flight(self, trip_id, **kwargs): return self._add_item('flights', Flight, trip_id, **kwargs)
+    def add_hotel(self, trip_id, **kwargs): return self._add_item('hotels', Hotel, trip_id, **kwargs)
+    def add_activity(self, trip_id, **kwargs): return self._add_item('activities', Activity, trip_id, **kwargs)
+    def add_expense(self, trip_id, **kwargs): return self._add_item('expenses', Expense, trip_id, **kwargs)
+
     def get_expenses_for_trip(self, trip_id):
         return [Expense(**e) for e in self._data.get('expenses', []) if e.get('trip_id') == trip_id]
-
     def remove_expense(self, expense_id):
         initial_len = len(self._data['expenses'])
         self._data['expenses'] = [e for e in self._data['expenses'] if e.get('id') != expense_id]
@@ -195,7 +201,6 @@ class DataStore:
             self._save_data()
             return True
         return False
-
     def get_details_for_trip(self, trip_id):
         return {
             "flights": [f for f in self._data.get('flights', []) if f.get('trip_id') == trip_id],
@@ -203,12 +208,14 @@ class DataStore:
             "activities": [a for a in self._data.get('activities', []) if a.get('trip_id') == trip_id]
         }
 
-# --- Configuração da Aplicação ---
+
+#  Configuração da Aplicação Flask ---
 app = Flask(__name__)
 CORS(app)
 db = DataStore()
 
-# --- Helpers de Permissão ---
+
+# Helpers ---
 def user_has_permission(trip_id, user_id):
     trip = db.find_trip_by_id(trip_id)
     if not trip:
@@ -218,7 +225,8 @@ def user_has_permission(trip_id, user_id):
         return True, None
     return False, (jsonify({'message': 'Permissão negada.'}), 403)
 
-# --- Rotas da API ---
+
+#  Rotas da API ---
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -239,7 +247,6 @@ def login():
 def create_trip():
     data = request.get_json()
     share_code = data.get('share_code', '').strip()
-
     trip = db.add_trip(data['user_id'], data['destination'], data['name'], data['start_date'], data['end_date'], share_code)
     
     if not trip:
@@ -280,9 +287,7 @@ def update_budget(trip_id):
     data = request.get_json()
     user_id = data.get('user_id')
     has_perm, error_resp = user_has_permission(trip_id, user_id)
-    if not has_perm:
-        return error_resp
-
+    if not has_perm: return error_resp
     updated_trip = db.update_trip_budget(trip_id, float(data['budget']))
     return jsonify({'trip': updated_trip.to_dict()}) if updated_trip else (jsonify({'message': 'Viagem não encontrada.'}), 404)
 
@@ -335,6 +340,8 @@ def update_hotel_status(item_id): return update_item_status('hotel', item_id)
 @app.route('/api/activities/<int:item_id>/status', methods=['PATCH'])
 def update_activity_status(item_id): return update_item_status('activity', item_id)
 
+
+#  Execução da Aplicação 
 if __name__ == '__main__':
     app.run(debug=True)
 
