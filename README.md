@@ -12,8 +12,8 @@ após isso, abra index.html para começar <br/>
 
 ## notes:
 
-o programa é essencialmente python, mas outras tecnologias foram usadas para compor a parte visual
-a questão de simular um servidor,banco de dados e a parte lógica do back-end está em python, porém visualmente foram usados frameworks CSS Tailwand , HTML e JS, além do JSON para integrar algumas partes python na web, mas também foi usado o FLASK que é um framework web para python.
+o programa é essencialmente python, mas outras tecnologias foram usadas para compor a parte visual,
+a questão de simular um servidor, simular um banco de dados e a parte lógica do back-end está em python com o JSON, enquanto visualmente foram usados frameworks CSS Tailwand , HTML e JS.
 
 <br/>
 
