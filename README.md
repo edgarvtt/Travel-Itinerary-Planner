@@ -7,6 +7,7 @@ Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual
 salve o programa em um diretório no seu computador <br/>
 execute ele através do terminal "python nome_do_arquivo.py" <br/>
 após isso, abra index.html para começar <br/>
+**(pode ser necessário instalar o FLASK, se sua máquina não tiver ele instalado)** </br>
 
 
 ## notes:
