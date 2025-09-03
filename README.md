@@ -13,14 +13,14 @@ após isso, abra index.html para começar <br/>
 ## notes:
 
 o programa é essencialmente python, mas outras tecnologias foram usadas para compor a parte visual,
-a questão de simular um servidor, simular um banco de dados e a parte lógica do back-end está em python com o JSON, enquanto visualmente foram usados frameworks CSS Tailwand , HTML e JS.
+a questão de simular um servidor, simular um banco de dados e a parte lógica do back-end está em Python com o JSON, enquanto visualmente foram usados frameworks CSS Tailwand , HTML e JS.
 <br/>
 
 decidi fazer com tecnologias web por ter uma maior familiriade (sempre tive afinidade com UX/UI e  tecnologias front-end) e por ter a certeza que ficaria algo mais bonito, já que
 a curva de aprendizado para aprender uma biblioteca python que entregasse a parte da interface gráfica com uma experiência de úsuario seria bastante alta (para mim que começaria do zero)
 então estou usando habilidades que adqueri anteriormente, como pode ser visto em outros projetos meus neste github :) . </br>
 
-Salientando também que o meu calcanhar de aquiles foi o JSON, sendo que ele deve ser retirado posteriomente, que por vez é desnecessário no contexto da disciplina. Estou usando por ele está simulando um banco de dados convertendo as informações do atributo de classes em dicionários em JSON. </br>
+Salientando também que o meu calcanhar de aquiles foi o JSON, sendo que ele deve ser retirado posteriomente, que por vez é desnecessário no contexto da disciplina. Estou usando por ele está simulando um banco de dados convertendo as informações do atributo de classes Python em dicionários em JSON. </br>
 
 ## Conceitual Class (what to expect conceptually from the program) 
 
