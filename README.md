@@ -12,16 +12,16 @@ após isso, abra index.html para começar <br/>
 
 # O que se espera da Aplicação - 
 
-1. **Criação e personalização de itinerários:** os usuários podem criar e personalizar itinerários de viagem -- atendido <br/>
-2. **Informações e recomendações sobre destinos:** Fornecer informações e recomendações sobre destinos -- parcialmente atendido -- sistema de IA para recomendações não implementado  <br/>
-3. **Integração de reservas:** integração com sistemas de reservas de hotéis, voos e atividades -- não atendido -- depende de API paga  <br/>
-4. **Ferramentas de Planejamento Colaborativo:** Ferramentas para planejamento colaborativo de itinerários com outros viajantes -- atendido  <br/>
-5. **Guias e recursos de viagem: acesso a guias e recursos de viagem** -- parcialmente atendido -- estrutura totalmente completa, só faltando coloca exemplos no modelo  <br/>
-6. **Personalização com base nas preferências:** Personalização de recomendações com base nas preferências do usuário -- parcialmente atendido -- dependendo do sistema de recomendação  <br/>
-7. **Integração de mapas e planejamento de rotas: integração de mapas para planejamento de rotas e navegação** -- não atendido  <br/>
-8. **Acompanhamento de despesas e gerenciamento de orçamento: acompanhamento de despesas de viagem e gerenciamento de orçamentos** -- atendido  <br/>
-9. **Acesso móvel e funcionalidade offline: garantir acessibilidade em dispositivos móveis, incluindo acesso offline** -- parcialmente atendido (site responsivo apenas) -- falta apenas disponibilizar offline  <br/>
-10.**Avaliações de usuários e contribuições da comunidade:** incorporar avaliações de usuários e sugestões da comunidade no planejamento -- não atendido  <br/>
+1. **Criação e personalização de itinerários:** os usuários podem criar e personalizar itinerários de viagem -- atendido <br/> <br/>
+2. **Informações e recomendações sobre destinos:** Fornecer informações e recomendações sobre destinos -- parcialmente atendido -- sistema de IA para recomendações não implementado  <br/> <br/>
+3. **Integração de reservas:** integração com sistemas de reservas de hotéis, voos e atividades -- não atendido -- depende de API paga  <br/> <br/>
+4. **Ferramentas de Planejamento Colaborativo:** Ferramentas para planejamento colaborativo de itinerários com outros viajantes -- atendido  <br/> <br/>
+5. **Guias e recursos de viagem: acesso a guias e recursos de viagem** -- parcialmente atendido -- estrutura totalmente completa, só faltando coloca exemplos no modelo  <br/> <br/>
+6. **Personalização com base nas preferências:** Personalização de recomendações com base nas preferências do usuário -- parcialmente atendido -- dependendo do sistema de recomendação  <br/> <br/>
+7. **Integração de mapas e planejamento de rotas: integração de mapas para planejamento de rotas e navegação** -- não atendido  <br/> <br/>
+8. **Acompanhamento de despesas e gerenciamento de orçamento: acompanhamento de despesas de viagem e gerenciamento de orçamentos** -- atendido  <br/> <br/>
+9. **Acesso móvel e funcionalidade offline: garantir acessibilidade em dispositivos móveis, incluindo acesso offline** -- parcialmente atendido (site responsivo apenas) -- falta apenas disponibilizar offline  <br/> <br/>
+10. **Avaliações de usuários e contribuições da comunidade:** incorporar avaliações de usuários e sugestões da comunidade no planejamento -- não atendido  <br/>
 
 Resultado: 
 
