@@ -1,101 +1,93 @@
-# 🧭 Travel Itinerary Planner
+# 🧭 Travel Itinerary Planner 
 
-Hi👋🏽 This is my project in "Projeto de Software", below are the conceptual classes of the project 👇🏽
+Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
+Disciplina Projeto de Software
 
-## for use: 
+# for use: 
 
 salve o programa em um diretório no seu computador <br/>
 execute ele através do terminal "python app.py" <br/>
 após isso, abra index.html para começar <br/>
 **(pode ser necessário instalar o FLASK, se sua máquina não tiver ele instalado)** </br>
 
+# O que se espera da Aplicação - 
 
-## notes:
+1. **Criação e personalização de itinerários:** os usuários podem criar e personalizar itinerários de viagem -- atendido
+2. **Informações e recomendações sobre destinos:** Fornecer informações e recomendações sobre destinos -- parcialmente atendido -- sistema de IA para recomendações não implementado 
+3. **Integração de reservas:** integração com sistemas de reservas de hotéis, voos e atividades -- não atendido -- depende de API paga 
+4. **Ferramentas de Planejamento Colaborativo:** Ferramentas para planejamento colaborativo de itinerários com outros viajantes -- atendido
+5. **Guias e recursos de viagem: acesso a guias e recursos de viagem** -- parcialmente atendido -- estrutura totalmente completa, só faltando coloca exemplos no modelo
+6. **Personalização com base nas preferências:** Personalização de recomendações com base nas preferências do usuário -- parcialmente atendido -- dependendo do sistema de recomendação
+7. **Integração de mapas e planejamento de rotas: integração de mapas para planejamento de rotas e navegação** -- não atendido
+8. **Acompanhamento de despesas e gerenciamento de orçamento: acompanhamento de despesas de viagem e gerenciamento de orçamentos** -- atendido
+9. **Acesso móvel e funcionalidade offline: garantir acessibilidade em dispositivos móveis, incluindo acesso offline** -- parcialmente atendido (site responsivo apenas) -- falta apenas disponibilizar offline
+10.**Avaliações de usuários e contribuições da comunidade:** incorporar avaliações de usuários e sugestões da comunidade no planejamento -- não atendido 
 
-dúvidas: evcbm@ic.ufal.br
+Resultado: 
 
-## Conceitual Class (what to expect conceptually from the program) 
+3 totalmente atendidas
+4 parcialmente atendidas (problemas brevemente descritos acima)
+3 não atendidas
 
-### 👤 User
+# Fotos da Aplicação:
 
-*Description*: Represents a user registered on the platform.
+#### PÁGINA INICIAL 
+<img width="1914" height="905" alt="image" src="https://github.com/user-attachments/assets/0db98645-988b-415c-8080-ebc698591736" />
 
-. **id** (string): Unique user identifier. <br/>
-. **name** (string): Username. <br/>
-. **email** (string): User's email address. <br/>
-. **password** (string): User password. <br/>
-. **preferences** (array de strings): Travel preferences (e.g.,"adventure," "relax," "historic"). <br/>
+#### PÁGINA INICIAL - #RECURSOS 
+<img width="1919" height="903" alt="image" src="https://github.com/user-attachments/assets/293a3517-d3b2-42cf-8699-97436b6436ba" />
 
-### 🗺️ Itinerary
+#### PÁGINA INICIAL - #DESTINOS
+<img width="1919" height="697" alt="image" src="https://github.com/user-attachments/assets/a763185b-da4c-45a3-9413-d4eb0ffe871c" />
 
-*Description*: The central object, representing the complete travel plan.
+#### PÁGINA INICIAL - #FOOTER
+<img width="1919" height="896" alt="image" src="https://github.com/user-attachments/assets/e832654e-f8a2-4abc-9372-3c504c00c5db" />
 
-. **id** (string): Unique route identifier. <br/>
-. **title** (string): Travel plan title. <br/>
-. **startDate** (date): Trip start date. <br/>
-. **endDate** (date): Trip end date. <br/>
-. **status** (string) :Planning status (e.g., "draft", "planned", "active") <br/>
+-----
 
-### 🛧 Destination
+#### CRIAR CONTA
 
-*Description*: Represents a city, country or point of interest.
+<img width="621" height="891" alt="image" src="https://github.com/user-attachments/assets/54a01eac-7c08-49a1-a723-b4a556433cf6" />
 
-. **id** (string):Unique destination identifier. <br/>
-. **name** (string): Destination name. <br/>
-. **description** (date): Brief description of the location. <br/>
-. **locationData** (object): Geolocation information (possible Google Maps) <br/>
-. **reviews** (array Review): Collection of reviews(e.g., "draft", "planned", "active") <br/>
-. **guides** (array Resource): Collection of travel guides and resources <br/>
+#### LOGIN
 
-### 🚅 TripDay 
+<img width="913" height="836" alt="image" src="https://github.com/user-attachments/assets/8238e38d-30a7-4d8f-be0b-cc4e6f4c81da" />
 
-*Description*: Represents a single day within the itinerary, organizing daily activities.
+-----
 
-. **date** (date): The specific date of the day. <br/>
+#### DASHBOARD INICIAL
 
-### 🏔️ Activity
+<img width="1917" height="902" alt="image" src="https://github.com/user-attachments/assets/74589f78-c336-4ac6-99ec-7ff6c74ec733" />
 
-*Description*: Represents a specific event or action in the itinerary (flight, hotel, tour, meal).
+* CANTO SUPERIOR ESQUERDO - CRIAR NOVO PLANNER DE VIAGEM
+* CANTO SUPERIOR DIREITO  - USAR CÓDIGO DE AMIGOS PARA CARREGAR UM PLANNER DE VIAGEM JÁ EXISTENTE
 
-. **id** (string) :Unique activity identifier. <br/>
-. **name** (string): Name of the activity (e.g. "Hotel Check-in", "Museum Visit"). <br/>
-. **type** (string): Type of activity (e.g. "hotel", "flight", "tour", "meal") <br/>
-. **startDate** (date): Start date and time. <br/>
-. **endDate** (date): End date and time <br/>
-. **description** (string): Activity details. <br/>
-. **coast** (number): Estimated or actual cost. <br/>
-. **type** (string): Reservation status (e.g. "reserved", "pending"). <br/>
+### DASHBOARD INICIAL - #PLANNER DE VIAGEM
 
-### 🚕 Booking
+<img width="1903" height="835" alt="image" src="https://github.com/user-attachments/assets/8d6fd986-f8a5-48fb-89c7-dafc7591e24e" />
+<img width="1898" height="560" alt="image" src="https://github.com/user-attachments/assets/75288fa6-7491-47da-8c21-d5659197de96" />
 
-*Description:* Stores information about a reservation.
+* CANTO INFERIOR - SUGESTÃO DE VIAGENS (SISTEMA DE RECOMENDAÇÕES AINDA NÃO IMPLEMENTADO)
 
-. **id** (string): Unique reservation identifier. <br/>
-. **bookingReference** (string): Reservation number. <br/>
-. **provider** (string): Name of the booking provider (e.g. "Booking.com", "Decolar") simulation without APIs. <br/>
-. **cost** (number): Final booking cost. <br/>
-. **status** (string): Reservation status (e.g. "confirmed", "cancelled"). <br/>
+----
 
-### 💸 Expense
+#### PLANNER
 
-*Description:* Tracks the costs of a trip.
+<img width="1914" height="903" alt="image" src="https://github.com/user-attachments/assets/4f7ee81c-bda3-4342-a425-5ef3f0ba7f72" />
 
-. **id** (string): Unique expense identifier. <br/>
-. **description** (string): Expense description (e.g., "lunch", "ticket"). <br/>
-. **amount** (number): Expense amount. <br/>
-. **currency** (string): Currency used. <br/>
-. **date** (date): Expense date. <br/>
-. **category** (string): Expense category (e.g., "food", "transportation").<br/>
- 
-### ⭐ Review
+* PARTE SUPERIOR - NOME DO PLANNER E SUBTITULO
+* ABAIXO DA PARTE SUPERIOR - CÓDIGO DE CONVITE PARA DEMAIS USUÁRIOS (DEFINIDO PREVIAMENTE OU ALEATORIAMENTE)
 
-*Description:* Contains user reviews and comments about destinations or activities.
+#### PLANNER - #DETALHES
 
-. **id** (string): Unique review identifier. <br/>
-. **text** (string): Comment text. <br/>
-. **rating** (number): Score (e.g., 1 to 5 stars). <br/>
-. **date** (date): Publication date. <br/>
+<img width="1885" height="589" alt="image" src="https://github.com/user-attachments/assets/34280c72-1b9d-4f76-84eb-93919a2ef129" />
 
-### ⭐ Resource
+* À ESQUERDA: INFORMAÇÕES SOBRE VOO , HOTEL E PASSEIOS (QUE SERÃO ADICIONADO POR OS ÚSUARIOS)
+* À DIREITA: FERRAMENTA DE ORÇAMENTO DA VIAGEM
 
-*Description:* Represents travel guides, articles, or other useful resources.
+--------------------------------------
+
+# POO 
+
+
+
