@@ -25,8 +25,8 @@ após isso, abra index.html para começar <br/>
 
 Resultado: 
 
-3 totalmente atendidas
-4 parcialmente atendidas (problemas brevemente descritos acima)
+3 totalmente atendidas | 
+4 parcialmente atendidas (problemas brevemente descritos acima) | 
 3 não atendidas
 
 # Fotos da Aplicação:
