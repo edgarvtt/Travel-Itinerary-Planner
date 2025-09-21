@@ -18,8 +18,8 @@ Disciplina Projeto de Software
 5. [PÁGINA INICIAL - Recursos](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---recursos) <br/>
 6. [PÁGINA INICIAL - Destinos](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---destinos) <br/>
 7. [PÁGINA INICIAL - Footer](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---footer) <br/>
-8. [CRIAR CONTA](https://github.com/edgarvtt/Travel-Itinerary-Planner#criar-conta) <br/>
-9. [LOGIN](https://github.com/edgarvtt/Travel-Itinerary-Planner#login) <br/>
+8. [Criar Conta](https://github.com/edgarvtt/Travel-Itinerary-Planner#criar-conta) <br/>
+9. [Login](https://github.com/edgarvtt/Travel-Itinerary-Planner#login) <br/>
 9. [Dashboard Inicial](https://github.com/edgarvtt/Travel-Itinerary-Planner#dashboard-inicial) <br/>
 10. [Dashboard Inicial - Planner ](https://github.com/edgarvtt/Travel-Itinerary-Planner#dashboard-inicial---planner-de-viagem) <br/>
 11. [Planner](https://github.com/edgarvtt/Travel-Itinerary-Planner#planner) <br/>
@@ -30,6 +30,8 @@ Disciplina Projeto de Software
 12. [Herança](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 13. [Polimorfismo](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 14. [Classe Abstrata](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
+15. [Encapsulamento](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
+
 
 <img width="1014" height="209" alt="image" src="https://github.com/user-attachments/assets/b1d1e294-a50a-4649-ac80-399f3cad914f" />
 
