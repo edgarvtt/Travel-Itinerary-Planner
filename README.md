@@ -91,46 +91,46 @@ Resultado:
 
 <details>
   
-<summary> ### Herança </summary>
+<summary> Herança </summary>
 
-class ItineraryItem:
-    def __init__(self, id, trip_id, is_done=False):
-        self.id = id
-        self.trip_id = trip_id
-        self.is_done = is_done
+class ItineraryItem: <br/>
+    def __init__(self, id, trip_id, is_done=False):<br/>
+        self.id = id<br/>
+        self.trip_id = trip_id<br/>
+        self.is_done = is_done<br/>
 
-##### classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem.
+##### classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem. <br/>
 
-class Flight(ItineraryItem):
-    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):
-        super().__init__(id, trip_id, is_done)
-        self.company = company
-        self.code = code
-        self.departure = departure
-        self.arrival = arrival
+class Flight(ItineraryItem): <br/>
+    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):<br/>
+        super().__init__(id, trip_id, is_done)<br/>
+        self.company = company<br/>
+        self.code = code<br/>
+        self.departure = departure<br/>
+        self.arrival = arrival<br/>
 
 class Hotel(ItineraryItem):
-    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):
-        super().__init__(id, trip_id, is_done)
-        self.name = name
-        self.checkin = checkin
-        self.checkout = checkout
+    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):<br/>
+        super().__init__(id, trip_id, is_done)<br/>
+        self.name = name<br/>
+        self.checkin = checkin<br/>
+        self.checkout = checkout<br/>
 
-class Activity(ItineraryItem):
-    def __init__(self, id, trip_id, description, date, is_done=False):
-        super().__init__(id, trip_id, is_done)
-        self.description = description
-        self.date = date
+class Activity(ItineraryItem):<br/>
+    def __init__(self, id, trip_id, description, date, is_done=False):<br/>
+        super().__init__(id, trip_id, is_done)<br/>
+        self.description = description<br/>
+        self.date = date<br/>
         
-class Expense(ItineraryItem):
-    def __init__(self, id, trip_id, description, amount, currency, date, category, is_done=False):
-        # A despesa também herda, mas o 'is_done' não é tão relevante aqui,
-        super().__init__(id, trip_id, is_done)
-        self.description = description
-        self.amount = amount
-        self.currency = currency
-        self.date = date
-        self.category = category
+class Expense(ItineraryItem):<br/>
+    def __init__(self, id, trip_id, description, amount, currency, date, category, is_done=False):<br/>
+        # A despesa também herda, mas o 'is_done' não é tão relevante aqui,<br/>
+        super().__init__(id, trip_id, is_done)<br/>
+        self.description = description<br/>
+        self.amount = amount<br/>
+        self.currency = currency<br/>
+        self.date = date <br/>
+        self.category = category<br/>
       
    </details>
 
