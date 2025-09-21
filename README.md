@@ -6,7 +6,7 @@ Disciplina Projeto de Software
 <img width="980" height="549" alt="image" src="https://github.com/user-attachments/assets/e1338023-f861-4e3a-95db-70d754665d63" />
 
 
-# Sumario
+# Sumário
 
 ## Informações úteis:
 1. [Projeto Estruturado - Travel.py ](https://github.com/edgarvtt/Travel-Itinerary-Planner#projeto-estruturado---travelpy) <br/>
@@ -33,7 +33,7 @@ Disciplina Projeto de Software
 
 <img width="1014" height="209" alt="image" src="https://github.com/user-attachments/assets/b1d1e294-a50a-4649-ac80-399f3cad914f" />
 
-## Projeto Estruturado - Travel.py
+## <span style="color:red"> Projeto Estruturado - Travel.py </span>
 
 é o primeiro projeto<br/>
 Um programa funcional estruturado, com biblioteca simples e python <br/>
