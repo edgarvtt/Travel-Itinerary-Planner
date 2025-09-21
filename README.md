@@ -3,6 +3,10 @@
 Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
 Disciplina Projeto de Software
 
+Sumario
+
+1. [Projeto Estruturado - Travel.py ](https://github.com/edgarvtt/Travel-Itinerary-Planner#travelpy)
+
 # Travel.py
 
 é o primeiro projeto<br/>
