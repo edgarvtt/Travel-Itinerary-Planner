@@ -6,27 +6,27 @@ Disciplina Projeto de Software
 # Sumario
 
 ## Informações úteis:
-1. [Projeto Estruturado - Travel.py ]() <br/>
-2. [Projeto POO - como usar? ]() <br/>
-3. [O que se espera da Aplicação ?]() <br/>
+1. [Projeto Estruturado - Travel.py ](https://github.com/edgarvtt/Travel-Itinerary-Planner#projeto-estruturado---travelpy) <br/>
+2. [Projeto POO - como usar? ](https://github.com/edgarvtt/Travel-Itinerary-Planner#projeto-poo---como-usar) <br/>
+3. [O que se espera da Aplicação ?](https://github.com/edgarvtt/Travel-Itinerary-Planner#o-que-se-espera-da-aplica%C3%A7%C3%A3o--) <br/>
 
 ## Figuras da Aplicação POO:
-4. [PÁGINA INICIAL - Homepage]() <br/>
-5. [PÁGINA INICIAL - Recursos]() <br/>
-6. [PÁGINA INICIAL - Destinos]() <br/>
-7. [PÁGINA INICIAL - Footer]() <br/>
-8. [CRIAR CONTA]() <br/>
-9. [LOGIN]() <br/>
-9. [Dashboard Inicial]() <br/>
-10. [Dashboard Inicial - Planner ]() <br/>
-11. [Planner]() <br/>
-12. [Planner - Detalhes]() <br/>
+4. [PÁGINA INICIAL - Homepage](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---homepage) <br/>
+5. [PÁGINA INICIAL - Recursos](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---recursos) <br/>
+6. [PÁGINA INICIAL - Destinos](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---destinos) <br/>
+7. [PÁGINA INICIAL - Footer](https://github.com/edgarvtt/Travel-Itinerary-Planner#p%C3%A1gina-inicial---footer) <br/>
+8. [CRIAR CONTA](https://github.com/edgarvtt/Travel-Itinerary-Planner#criar-conta) <br/>
+9. [LOGIN](https://github.com/edgarvtt/Travel-Itinerary-Planner#login) <br/>
+9. [Dashboard Inicial](https://github.com/edgarvtt/Travel-Itinerary-Planner#dashboard-inicial) <br/>
+10. [Dashboard Inicial - Planner ](https://github.com/edgarvtt/Travel-Itinerary-Planner#dashboard-inicial---planner-de-viagem) <br/>
+11. [Planner](https://github.com/edgarvtt/Travel-Itinerary-Planner#planner) <br/>
+12. [Planner - Detalhes](https://github.com/edgarvtt/Travel-Itinerary-Planner#planner---detalhes) <br/>
 
 ## Programação Orientada a Objetos ( Conceitos utilizados):
 
-12. [Herança]() <br/>
-13. [Polimorfismo]() <br/>
-14. [Classe Abstrata]() <br/>
+12. [Herança](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
+13. [Polimorfismo](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
+14. [Classe Abstrata](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 
 ## Projeto Estruturado - Travel.py
 
