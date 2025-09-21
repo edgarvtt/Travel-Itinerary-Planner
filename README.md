@@ -3,24 +3,45 @@
 Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
 Disciplina Projeto de Software
 
-Sumario
+# Sumario
 
-1. [Projeto Estruturado - Travel.py ](https://github.com/edgarvtt/Travel-Itinerary-Planner#travelpy)
+## Informações úteis:
+1. [Projeto Estruturado - Travel.py ]() <br/>
+2. [Projeto POO - como usar? ]() <br/>
+3. [O que se espera da Aplicação ?]() <br/>
 
-# Travel.py
+## Figuras da Aplicação POO:
+4. [PÁGINA INICIAL - Homepage]() <br/>
+5. [PÁGINA INICIAL - Recursos]() <br/>
+6. [PÁGINA INICIAL - Destinos]() <br/>
+7. [PÁGINA INICIAL - Footer]() <br/>
+8. [CRIAR CONTA]() <br/>
+9. [LOGIN]() <br/>
+9. [Dashboard Inicial]() <br/>
+10. [Dashboard Inicial - Planner ]() <br/>
+11. [Planner]() <br/>
+12. [Planner - Detalhes]() <br/>
+
+## Programação Orientada a Objetos ( Conceitos utilizados):
+
+12. [Herança]() <br/>
+13. [Polimorfismo]() <br/>
+14. [Classe Abstrata]() <br/>
+
+## Projeto Estruturado - Travel.py
 
 é o primeiro projeto<br/>
 Um programa funcional estruturado, com biblioteca simples e python <br/>
 segue a mesma ideia do POO PROJECT, mas em formato de programação estruturada
 
-# for use POO PROJECT: 
+## Projeto POO - Como Usar: 
 
 salve o programa em um diretório no seu computador <br/>
 execute ele através do terminal "python app.py" <br/>
 após isso, abra index.html para começar <br/>
 **(pode ser necessário instalar o FLASK, se sua máquina não tiver ele instalado)** </br>
 
-# O que se espera da Aplicação - 
+## O que se espera da Aplicação ?- 
 
 1. **Criação e personalização de itinerários:** os usuários podem criar e personalizar itinerários de viagem -- atendido <br/> <br/>
 2. **Informações e recomendações sobre destinos:** Fornecer informações e recomendações sobre destinos -- parcialmente atendido -- sistema de IA para recomendações não implementado  <br/> <br/>
@@ -39,9 +60,9 @@ Resultado:
 4 parcialmente atendidas (problemas brevemente descritos acima) | 
 3 não atendidas
 
-# Fotos da Aplicação:
+## Fotos da Aplicação:
 
-#### PÁGINA INICIAL 
+#### PÁGINA INICIAL - Homepage
 <img width="1914" height="905" alt="image" src="https://github.com/user-attachments/assets/0db98645-988b-415c-8080-ebc698591736" />
 
 #### PÁGINA INICIAL - #RECURSOS 
