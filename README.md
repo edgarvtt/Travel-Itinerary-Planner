@@ -89,5 +89,49 @@ Resultado:
 
 # POO 
 
+<details>
+  
+<summary> ### Herança </summary>
+
+class ItineraryItem:
+    def __init__(self, id, trip_id, is_done=False):
+        self.id = id
+        self.trip_id = trip_id
+        self.is_done = is_done
+
+##### classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem.
+
+class Flight(ItineraryItem):
+    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.company = company
+        self.code = code
+        self.departure = departure
+        self.arrival = arrival
+
+class Hotel(ItineraryItem):
+    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.name = name
+        self.checkin = checkin
+        self.checkout = checkout
+
+class Activity(ItineraryItem):
+    def __init__(self, id, trip_id, description, date, is_done=False):
+        super().__init__(id, trip_id, is_done)
+        self.description = description
+        self.date = date
+        
+class Expense(ItineraryItem):
+    def __init__(self, id, trip_id, description, amount, currency, date, category, is_done=False):
+        # A despesa também herda, mas o 'is_done' não é tão relevante aqui,
+        super().__init__(id, trip_id, is_done)
+        self.description = description
+        self.amount = amount
+        self.currency = currency
+        self.date = date
+        self.category = category
+      
+   </details>
 
 
