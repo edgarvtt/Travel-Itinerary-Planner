@@ -33,7 +33,7 @@ Disciplina Projeto de Software
 
 <img width="1014" height="209" alt="image" src="https://github.com/user-attachments/assets/b1d1e294-a50a-4649-ac80-399f3cad914f" />
 
-## <span style="color:red"> Projeto Estruturado - Travel.py </span>
+##  Projeto Estruturado - Travel.py
 
 é o primeiro projeto<br/>
 Um programa funcional estruturado, com biblioteca simples e python <br/>
