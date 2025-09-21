@@ -3,7 +3,7 @@
 Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
 Disciplina Projeto de Software
 
-<img width="1011" height="566" alt="image" src="https://github.com/user-attachments/assets/d282d609-ea3a-4ba2-a2ba-f675f8f57a16" />
+<img width="980" height="549" alt="image" src="https://github.com/user-attachments/assets/e1338023-f861-4e3a-95db-70d754665d63" />
 
 
 # Sumario
@@ -30,6 +30,8 @@ Disciplina Projeto de Software
 12. [Herança](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 13. [Polimorfismo](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 14. [Classe Abstrata](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
+
+<img width="556" height="264" alt="image" src="https://github.com/user-attachments/assets/2870c9f4-e60c-43e2-97a2-fe1cace36b0b" />
 
 ## Projeto Estruturado - Travel.py
 
