@@ -28,6 +28,9 @@ Disciplina Projeto de Software
 13. [Polimorfismo](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 14. [Classe Abstrata](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 
+<img width="1003" height="568" alt="image" src="https://github.com/user-attachments/assets/c64813c3-9bb9-4088-9261-c19cb1dd6b44" />
+
+
 ## Projeto Estruturado - Travel.py
 
 é o primeiro projeto<br/>
@@ -41,7 +44,7 @@ execute ele através do terminal "python app.py" <br/>
 após isso, abra index.html para começar <br/>
 **(pode ser necessário instalar o FLASK, se sua máquina não tiver ele instalado)** </br>
 
-## O que se espera da Aplicação ?- 
+## O que se espera da Aplicação ?
 
 1. **Criação e personalização de itinerários:** os usuários podem criar e personalizar itinerários de viagem -- atendido <br/> <br/>
 2. **Informações e recomendações sobre destinos:** Fornecer informações e recomendações sobre destinos -- parcialmente atendido -- sistema de IA para recomendações não implementado  <br/> <br/>
