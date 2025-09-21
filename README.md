@@ -31,7 +31,7 @@ Disciplina Projeto de Software
 13. [Polimorfismo](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 14. [Classe Abstrata](https://github.com/edgarvtt/Travel-Itinerary-Planner#poo) <br/>
 
-<img width="556" height="264" alt="image" src="https://github.com/user-attachments/assets/2870c9f4-e60c-43e2-97a2-fe1cace36b0b" />
+<img width="1017" height="229" alt="image" src="https://github.com/user-attachments/assets/e2056f64-eecc-450f-89e4-d38f20ef8fc8" />
 
 ## Projeto Estruturado - Travel.py
 
