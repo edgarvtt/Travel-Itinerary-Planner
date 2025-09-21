@@ -3,7 +3,7 @@
 Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
 Disciplina Projeto de Software
 
-<img width="1003" height="568" alt="image" src="https://github.com/user-attachments/assets/c64813c3-9bb9-4088-9261-c19cb1dd6b44" />
+<img width="1011" height="566" alt="image" src="https://github.com/user-attachments/assets/d282d609-ea3a-4ba2-a2ba-f675f8f57a16" />
 
 
 # Sumario
