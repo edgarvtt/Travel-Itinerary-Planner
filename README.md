@@ -171,5 +171,12 @@ então na prática ela é como uma classe abstrata, mas na teoria não, por não
 
    </details>
 
-   
+  <details>
+  
+<summary> Encapsulamento </summary>
 
+a classe DataStore usa encapsulamento, ela é responsável por guardar informações no JSON, permitindo então uma camada de segurança na gestão dos dados
+
+<img width="1189" height="252" alt="image" src="https://github.com/user-attachments/assets/7b127707-0c9c-4d2b-8966-44d1e1b02ec3" />
+
+   </details>
