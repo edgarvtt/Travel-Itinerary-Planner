@@ -93,44 +93,13 @@ Resultado:
   
 <summary> Herança </summary>
 
-class ItineraryItem: <br/>
-    def __init__(self, id, trip_id, is_done=False):<br/>
-        self.id = id<br/>
-        self.trip_id = trip_id<br/>
-        self.is_done = is_done<br/>
+<img width="529" height="203" alt="image" src="https://github.com/user-attachments/assets/9967f710-61d3-495a-89f5-f0b5b2324588" />
+classe mãe
 
-##### classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem. <br/>
+## classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem. <br/>
 
-class Flight(ItineraryItem): <br/>
-    def __init__(self, id, trip_id, company, code, departure, arrival, is_done=False):<br/>
-        super().__init__(id, trip_id, is_done)<br/>
-        self.company = company<br/>
-        self.code = code<br/>
-        self.departure = departure<br/>
-        self.arrival = arrival<br/>
+<img width="1032" height="720" alt="image" src="https://github.com/user-attachments/assets/4b946579-7014-444d-827c-ac6427a23df5" />
 
-class Hotel(ItineraryItem):
-    def __init__(self, id, trip_id, name, checkin, checkout, is_done=False):<br/>
-        super().__init__(id, trip_id, is_done)<br/>
-        self.name = name<br/>
-        self.checkin = checkin<br/>
-        self.checkout = checkout<br/>
-
-class Activity(ItineraryItem):<br/>
-    def __init__(self, id, trip_id, description, date, is_done=False):<br/>
-        super().__init__(id, trip_id, is_done)<br/>
-        self.description = description<br/>
-        self.date = date<br/>
-        
-class Expense(ItineraryItem):<br/>
-    def __init__(self, id, trip_id, description, amount, currency, date, category, is_done=False):<br/>
-        # A despesa também herda, mas o 'is_done' não é tão relevante aqui,<br/>
-        super().__init__(id, trip_id, is_done)<br/>
-        self.description = description<br/>
-        self.amount = amount<br/>
-        self.currency = currency<br/>
-        self.date = date <br/>
-        self.category = category<br/>
       
    </details>
 
