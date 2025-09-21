@@ -105,4 +105,20 @@ Resultado:
       
    </details>
 
+<details>
+  
+<summary> Polimorfismo </summary>
+
+O projeto aplica o polimorfismo através de uma técnica comum em python - Duck Typing . <br/>
+
+polimorfismo do tipo 'Duck Typing', onde várias classes independentes, como User e Trip, implementam um método com o mesmo nome, .to_dict(). Isto permite que o nosso código trate estes objetos diferentes de forma uniforme, por exemplo: ao converter listas de objetos para o formato JSON, tornando o código mais flexível e limpo.
+<br/>
+
+O nome vem da expressão "Se anda como um pato e faz quack como um pato, então deve ser um pato".Em Python, não nos importamos com o "tipo" exato do objeto, mas sim com o que ele consegue fazer (quais métodos ele tem), ou seja apesar de não terem algo em comum como herdar de uma outra classe, elas possuem o mesmo método em comportamentos diferentes e é isso que importa para o python <br/>
+
+<img width="1513" height="624" alt="image" src="https://github.com/user-attachments/assets/990a01dd-648b-4ff2-a111-171337076b21" /><br/>
+como é mostrado na foto acima algumas das classes que usam o to_dict();
+
+
+   </details>
 
