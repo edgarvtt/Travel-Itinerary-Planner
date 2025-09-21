@@ -93,8 +93,10 @@ Resultado:
   
 <summary> Herança </summary>
 
+## Classe Mãe
+
 <img width="529" height="203" alt="image" src="https://github.com/user-attachments/assets/9967f710-61d3-495a-89f5-f0b5b2324588" />
-classe mãe
+
 
 ## classes Flight, Hotel, Activity e Expense HERDAM ItineraryItem. <br/>
 
