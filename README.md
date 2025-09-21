@@ -3,7 +3,13 @@
 Um aplicativo com classes para destinos, itinerários e viajantes, auxiliando no planejamento de viagens, criação de itinerários e recomendações de viagens.
 Disciplina Projeto de Software
 
-# for use: 
+#Travel.py
+
+é o primeiro projeto<br/>
+Um programa funcional estruturado, com biblioteca simples e python <br/>
+segue a mesma ideia do POO PROJECT, mas em formato de programação estruturada
+
+# for use POO PROJECT: 
 
 salve o programa em um diretório no seu computador <br/>
 execute ele através do terminal "python app.py" <br/>
@@ -121,4 +127,19 @@ como é mostrado na foto acima algumas das classes que usam o to_dict();
 
 
    </details>
+
+<details>
+  
+<summary> Abstrata </summary>
+
+No  projeto, a classe ItineraryItem funciona como uma classe base para Flight, Hotel e Activity, implementando o pilar da Herança. Embora ela sirva a um propósito conceptualmente semelhante a uma classe abstrata estabelecer uma estrutura comum , ela não é tecnicamente abstrata porque não usamos os mecanismos em Python para proibir a sua instanciação direta. </br>
+
+então na prática ela é como uma classe abstrata, mas na teoria não, por não possuir mecanismos do python que fizesse ela uma classe abstrata (**o que não seria útil no projeto**)
+
+<img width="521" height="204" alt="image" src="https://github.com/user-attachments/assets/8183eb20-6ae5-483d-b975-799bb43e95e8" />
+
+
+   </details>
+
+   
 
